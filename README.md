@@ -1,5 +1,7 @@
 # Graduate Attributes Self-Assessment
 
+**Live tool: https://drdukegledhill.github.io/GraduateAttributes/**
+
 A lightweight, single-page web tool for students to self-assess their development across the University of Huddersfield's seven Graduate Attributes. No accounts, no server, no data storage — progress is encoded directly in a bookmarkable URL.
 
 ## Graduate Attributes
