@@ -22,12 +22,12 @@ Students visit the page and rate themselves 1–5 on each attribute. The radar/s
 
 Up to **5 assessments** can be completed across the academic year. Each new assessment adds another layer to the radar chart, making development over time visible at a glance.
 
-After the second assessment, the summary screen also shows:
+Once two assessments are saved, an **Assessment / Progress** tab switcher appears at the top of the page. The Progress tab shows:
 
 - **Score trends** — a line chart tracing each attribute across all completed assessments, with a colour-coded legend
 - **Progress so far** — a side-by-side score grid for quick comparison
 
-Returning students with two or more assessments on record can tap **View progress** at the top of the form to jump straight to the summary without completing a new submission.
+Switching back to the Assessment tab always presents a clean form for the next round. A **dark/light mode** toggle (☀️/🌙) in the header switches themes, with the preference saved in the browser.
 
 ### URL format
 
