@@ -455,6 +455,28 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.12);
     }
 
+    /* ── Footer ──────────────────────────────────────── */
+
+    footer {
+      text-align: center;
+      padding: 28px 16px 20px;
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    .reset-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.74rem;
+      color: var(--muted);
+      padding: 0;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .reset-btn:hover { color: var(--accent); }
+
     /* ── Utility ─────────────────────────────────────── */
     .hidden { display: none !important; }
 
@@ -575,6 +597,10 @@
     </div>
   </div>
 </main>
+
+<footer>
+  <p>© Dr Duke Gledhill &nbsp;·&nbsp; <button class="reset-btn" onclick="resetAll()">Reset all data</button></p>
+</footer>
 
 <script>
   /* ── Data ──────────────────────────────────────────────── */
@@ -1081,6 +1107,27 @@
       `;
       grid.appendChild(row);
     });
+  }
+
+  /* ── Reset ─────────────────────────────────────────────── */
+
+  function resetAll() {
+    if (!confirm('This will clear all your assessment data and cannot be undone. Continue?')) return;
+    history.replaceState(null, '', location.pathname);
+    historical = [];
+    current    = new Array(7).fill(null);
+    document.getElementById('postSubmission').classList.add('hidden');
+    document.getElementById('allDone').classList.add('hidden');
+    document.getElementById('compareSection').classList.add('hidden');
+    document.getElementById('progressChartSection').classList.add('hidden');
+    document.getElementById('assessmentView').classList.remove('hidden');
+    buildQuestions();
+    updateBanner(1);
+    updateProgress();
+    updateModeSwitcher('assessment');
+    initChart();
+    refreshChartSummary();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /* ── Init ──────────────────────────────────────────────── */
