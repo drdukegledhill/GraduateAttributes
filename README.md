@@ -2,7 +2,7 @@
 
 **Live tool: https://drdukegledhill.github.io/GraduateAttributes/**
 
-A lightweight, single-page web tool for students to self-assess their development across the University of Huddersfield's seven Graduate Attributes. No accounts, no server, no data storage — progress is encoded directly in a bookmarkable URL.
+A lightweight, single-page web tool for students to self-assess their development across the University of Huddersfield's seven Graduate Attributes. No accounts, no server, no data storage. Progress is encoded directly in a bookmarkable URL.
 
 ## Graduate Attributes
 
@@ -24,7 +24,7 @@ In practice: managing your workload effectively, going beyond the minimum becaus
 
 **Understanding how organisations operate within their broader environment.**
 
-Commercial awareness means knowing what drives success in an organisation — including markets, competition, regulation, finance, and the needs of different stakeholders. It is the ability to see the bigger picture: understanding why decisions are made, how different parts of a business connect, and what pressures organisations face from outside.
+Commercial awareness means knowing what drives success in an organisation, including markets, competition, regulation, finance, and the needs of different stakeholders. It is the ability to see the bigger picture: understanding why decisions are made, how different parts of a business connect, and what pressures organisations face from outside.
 
 In practice: following industry news and trends relevant to your field, understanding what makes a business financially viable, recognising how decisions in one team affect others, appreciating what customers, employees, and shareholders each need from an organisation.
 
@@ -36,7 +36,7 @@ In practice: following industry news and trends relevant to your field, understa
 
 **Bringing creativity, initiative, and adaptability to problems and opportunities.**
 
-Being enterprising is not just about starting businesses — it means bringing entrepreneurial energy to whatever you do. It is about spotting opportunities, generating ideas, and adapting your approach when circumstances change or a plan is not working. Enterprising people find ways forward where others see obstacles.
+Being enterprising is not just about starting businesses. It means bringing entrepreneurial energy to whatever you do. It is about spotting opportunities, generating ideas, and adapting your approach when circumstances change or a plan is not working. Enterprising people find ways forward where others see obstacles.
 
 In practice: proposing solutions rather than just identifying problems, approaching challenges with a "how might we?" mindset, pivoting quickly when a plan is not working, experimenting with new approaches, turning a creative idea into a concrete action.
 
@@ -48,7 +48,7 @@ In practice: proposing solutions rather than just identifying problems, approach
 
 **Maintaining drive and focus when things get difficult.**
 
-Resilience is the ability to deal constructively with setbacks, pressure, and uncertainty — and to keep going. It does not mean never struggling; it means being able to recover, learn from difficulty, and sustain your effort over time. Resilient people do not need everything to go smoothly to perform well.
+Resilience is the ability to deal constructively with setbacks, pressure, and uncertainty, and to keep going. It does not mean never struggling; it means being able to recover, learn from difficulty, and sustain your effort over time. Resilient people do not need everything to go smoothly to perform well.
 
 In practice: staying calm under pressure, bouncing back after a disappointing result, learning from failure rather than being defeated by it, persisting when a task is harder than expected, keeping perspective when things go wrong.
 
@@ -70,7 +70,7 @@ In practice: taking an active, constructive role in group work, listening carefu
 
 ### 🚀 Confident leader
 
-**Stepping up to inspire, guide, and motivate others — whether or not you hold a formal role.**
+**Stepping up to inspire, guide, and motivate others, whether or not you hold a formal role.**
 
 Leadership is not reserved for managers. A confident leader is someone who can identify what needs doing, bring others along, and make things happen. It means communicating a clear direction, holding yourself and others accountable, encouraging contributions from quieter voices, and owning the outcome of the decisions you make.
 
@@ -84,7 +84,7 @@ In practice: taking responsibility for a group's direction when needed, communic
 
 **Understanding the world beyond your immediate context and welcoming diverse perspectives.**
 
-Global and social awareness means recognising that decisions have implications beyond the immediate — for people, communities, and the environment. It involves being curious about perspectives that differ from your own, understanding how cultural differences shape communication and expectation, and thinking about ethical and sustainability impacts alongside performance.
+Global and social awareness means recognising that decisions have implications beyond the immediate, including for people, communities, and the environment. It involves being curious about perspectives that differ from your own, understanding how cultural differences shape communication and expectation, and thinking about ethical and sustainability impacts alongside performance.
 
 In practice: seeking out viewpoints that differ from your own, staying curious about global events and how they connect to your field, recognising how cultural differences shape communication and expectation, thinking about sustainability and ethical impact alongside commercial outcomes, being genuinely inclusive and respectful of difference.
 
@@ -94,18 +94,18 @@ In practice: seeking out viewpoints that differ from your own, staying curious a
 
 ## How it works
 
-Students visit the page and rate themselves 1–5 on each attribute. The radar/spider chart updates in real time as they answer. On saving, the browser URL updates to encode their scores — they bookmark it and return later for subsequent assessments.
+Students visit the page and rate themselves 1–5 on each attribute. The radar/spider chart updates in real time as they answer. On saving, the browser URL updates to encode their scores; they can bookmark it and return later for subsequent assessments.
 
 Up to **5 assessments** can be completed across the academic year. Each new assessment adds another layer to the radar chart, making development over time visible at a glance.
 
 Once two assessments are saved, an **Assessment / Progress** tab switcher appears at the top of the page. The Progress tab shows:
 
-- **Score trends** — a line chart tracing each attribute across all completed assessments, with a colour-coded legend
-- **Progress so far** — a side-by-side score grid for quick comparison
+- **Score trends**: a line chart tracing each attribute across all completed assessments, with a colour-coded legend
+- **Progress so far**: a side-by-side score grid for quick comparison
 
 Switching back to the Assessment tab always presents a clean form for the next round. A **dark/light mode** toggle (☀️/🌙) in the header switches themes, with the preference saved in the browser. A **Reset all data** button in the footer clears the URL and returns the tool to its initial state.
 
-Each attribute card on the assessment page has an **ⓘ button** that opens a popup with a fuller explanation of that attribute — useful for students who want to understand what they are rating themselves on before answering.
+Each attribute card on the assessment page has an **ⓘ button** that opens a popup with a fuller explanation of that attribute, useful for students who want to understand what they are rating themselves on before answering.
 
 ### URL format
 
