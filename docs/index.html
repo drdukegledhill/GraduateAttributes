@@ -477,6 +477,88 @@
 
     .reset-btn:hover { color: var(--accent); }
 
+    /* ── Attribute info modal ────────────────────────── */
+
+    .attr-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+
+    .attr-modal {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+      padding: 24px;
+      max-width: 480px;
+      width: 100%;
+      max-height: 82vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .attr-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-right: 28px;
+    }
+
+    .attr-modal-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .attr-modal-title { font-size: 1.05rem; font-weight: 700; color: var(--primary); }
+
+    .attr-modal-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: var(--border);
+      border: none;
+      border-radius: 6px;
+      width: 28px; height: 28px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      transition: background 0.15s, color 0.15s;
+      line-height: 1;
+    }
+    .attr-modal-close:hover { background: var(--accent); color: white; }
+
+    .attr-modal-body { font-size: 0.84rem; line-height: 1.65; color: var(--text); }
+    .attr-modal-body p { margin-bottom: 10px; }
+    .attr-modal-body ul { padding-left: 18px; margin-bottom: 10px; }
+    .attr-modal-body li { margin-bottom: 5px; }
+    .attr-modal-body strong { color: var(--primary); }
+    .attr-modal-body em { color: var(--muted); }
+
+    .info-btn {
+      background: none;
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      font-size: 0.68rem;
+      color: var(--muted);
+      padding: 1px 5px;
+      border-radius: 100px;
+      line-height: 1.4;
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
+      vertical-align: middle;
+      margin-left: 5px;
+      font-weight: 600;
+    }
+    .info-btn:hover { color: var(--primary); border-color: var(--primary); background: var(--bg); }
+
     /* ── Utility ─────────────────────────────────────── */
     .hidden { display: none !important; }
 
@@ -602,6 +684,18 @@
   <p>© Dr Duke Gledhill &nbsp;·&nbsp; <button class="reset-btn" onclick="resetAll()">Reset all data</button></p>
 </footer>
 
+<!-- Attribute info modal -->
+<div class="attr-modal-overlay hidden" id="attrModal" onclick="closeAttrModal(event)">
+  <div class="attr-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="attr-modal-close" onclick="closeAttrModal()" aria-label="Close">✕</button>
+    <div class="attr-modal-header">
+      <div class="attr-modal-icon" id="modalIcon"></div>
+      <div class="attr-modal-title" id="modalTitle"></div>
+    </div>
+    <div class="attr-modal-body" id="modalBody"></div>
+  </div>
+</div>
+
 <script>
   /* ── Data ──────────────────────────────────────────────── */
 
@@ -609,37 +703,107 @@
     {
       name: 'Self-motivated',       icon: '🎯', color: '#e84393', bg: '#fde8f4',
       desc: 'You have the ability to do what needs to be done without being prompted by others.',
-      question: 'How well do you drive your own work and development without needing others to push you?'
+      question: 'How well do you drive your own work and development without needing others to push you?',
+      detail: `<p>Self-motivation means taking ownership of your work and development without needing external prompting. It is about setting goals for yourself, following through without being chased, and actively seeking new challenges rather than waiting to be told what to do.</p>
+<p><strong>What this looks like in practice:</strong></p>
+<ul>
+  <li>Managing your own time and workload effectively</li>
+  <li>Going beyond the minimum because you care about quality</li>
+  <li>Seeking feedback before it is offered to you</li>
+  <li>Developing new skills outside of formal study or structured tasks</li>
+  <li>Following through on commitments without needing reminders</li>
+</ul>
+<p><em>Employers value this because self-motivated graduates can be trusted to work independently, take initiative, and grow in a role without constant supervision.</em></p>`
     },
     {
       name: 'Commercially aware',   icon: '🌐', color: '#e05c2a', bg: '#fdeee8',
       desc: 'You understand the wider environment in which an organisation operates.',
-      question: 'How confident are you in understanding the pressures and opportunities facing organisations today?'
+      question: 'How confident are you in understanding the pressures and opportunities facing organisations today?',
+      detail: `<p>Commercial awareness means knowing what drives success in an organisation — including markets, competition, regulation, finance, and the needs of different stakeholders. It is the ability to see the bigger picture: why decisions are made, how different parts of a business connect, and what pressures organisations face from outside.</p>
+<p><strong>What this looks like in practice:</strong></p>
+<ul>
+  <li>Following industry news and trends relevant to your field</li>
+  <li>Understanding what makes a business financially viable</li>
+  <li>Recognising how decisions in one team affect others</li>
+  <li>Appreciating what customers, employees, and shareholders each need from an organisation</li>
+  <li>Connecting your day-to-day work to the wider goals of the organisation</li>
+</ul>
+<p><em>Employers value this because graduates who understand business context make better decisions, communicate more effectively across teams, and can contribute meaningfully beyond their immediate role.</em></p>`
     },
     {
       name: 'Enterprising',         icon: '💡', color: '#d68910', bg: '#fef5ec',
       desc: 'You are able to adapt your thinking and behaviour to suit changing circumstances.',
-      question: 'How well do you adapt your thinking and approach when situations change or new opportunities arise?'
+      question: 'How well do you adapt your thinking and approach when situations change or new opportunities arise?',
+      detail: `<p>Being enterprising is not just about starting businesses — it means bringing creative, proactive energy to whatever you do. It is about spotting opportunities, generating ideas, and adapting your approach when circumstances change or when a plan is not working. Enterprising people find ways forward where others see obstacles.</p>
+<p><strong>What this looks like in practice:</strong></p>
+<ul>
+  <li>Proposing solutions rather than just identifying problems</li>
+  <li>Approaching challenges with a "how might we?" mindset</li>
+  <li>Pivoting quickly and positively when a plan is not working</li>
+  <li>Experimenting with new approaches and learning from the results</li>
+  <li>Turning a creative idea into a practical, concrete action</li>
+</ul>
+<p><em>Employers value this because organisations need people who can innovate and adapt. An enterprising mindset drives growth, problem-solving, and continuous improvement at every level.</em></p>`
     },
     {
       name: 'Resilient',            icon: '🏋️', color: '#2a9d8f', bg: '#e8f6f5',
       desc: 'You are driven, resolute and determined and able to deal positively with challenges.',
-      question: 'How effectively do you deal with setbacks, pressure, and difficult challenges?'
+      question: 'How effectively do you deal with setbacks, pressure, and difficult challenges?',
+      detail: `<p>Resilience is the ability to deal constructively with setbacks, pressure, and uncertainty — and to keep going. It does not mean never struggling; it means being able to recover, learn from difficulty, and sustain your effort over time. Resilient people do not need everything to go smoothly to perform well.</p>
+<p><strong>What this looks like in practice:</strong></p>
+<ul>
+  <li>Staying calm and focused when you are under pressure</li>
+  <li>Bouncing back after a disappointing result rather than dwelling on it</li>
+  <li>Treating failure as feedback and adjusting your approach</li>
+  <li>Persisting when a task is harder or takes longer than expected</li>
+  <li>Keeping perspective and maintaining your wellbeing when things go wrong</li>
+</ul>
+<p><em>Employers value this because workplaces are demanding and unpredictable. Resilient graduates sustain their performance, support their teams, and navigate ambiguity without needing excessive reassurance.</em></p>`
     },
     {
       name: 'Effective collaborator', icon: '🤝', color: '#457b9d', bg: '#eaf2f8',
       desc: 'You work well with others and have effective interpersonal skills.',
-      question: 'How well do you work within teams and build productive, positive relationships with others?'
+      question: 'How well do you work within teams and build productive, positive relationships with others?',
+      detail: `<p>Effective collaboration is more than just being easy to work with. It means actively contributing to group success, listening to understand rather than just waiting to speak, managing disagreements constructively, and adapting your communication style to suit different people and contexts.</p>
+<p><strong>What this looks like in practice:</strong></p>
+<ul>
+  <li>Taking an active, fair share of work in group settings</li>
+  <li>Listening carefully and checking your understanding before responding</li>
+  <li>Managing disagreements respectfully without letting them escalate</li>
+  <li>Adapting how you communicate to suit different people and situations</li>
+  <li>Celebrating team successes, not just your own individual contributions</li>
+</ul>
+<p><em>Employers value this because almost all professional work involves collaboration. Graduates who build rapport quickly, navigate team dynamics well, and make the people around them more effective are invaluable.</em></p>`
     },
     {
       name: 'Confident leader',     icon: '🚀', color: '#6a4c93', bg: '#f2edf9',
       desc: 'You are able to enthuse a group and motivate them to work towards an identified goal.',
-      question: 'How confident are you in stepping up to lead, motivate, and guide others towards a shared goal?'
+      question: 'How confident are you in stepping up to lead, motivate, and guide others towards a shared goal?',
+      detail: `<p>Leadership is not reserved for managers. A confident leader is someone who can identify what needs doing, bring others along, and make things happen — whether or not they hold a formal role. It means communicating a clear direction, holding yourself and others accountable, and owning the outcome of the decisions you make.</p>
+<p><strong>What this looks like in practice:</strong></p>
+<ul>
+  <li>Taking responsibility for a group's direction when no one else steps up</li>
+  <li>Communicating goals clearly so others feel energised and aligned</li>
+  <li>Drawing out contributions from quieter members of the team</li>
+  <li>Holding yourself accountable when things do not go to plan</li>
+  <li>Making decisions, committing to them, and following through</li>
+</ul>
+<p><em>Employers value this because organisations need people at every level who can create momentum and give teams direction — not just those at the top of an org chart.</em></p>`
     },
     {
       name: 'Globally & socially aware', icon: '🌍', color: '#1c7c54', bg: '#e8f5ef',
       desc: 'You welcome new ways of thinking and can anticipate the impact of external situations.',
-      question: 'How open are you to diverse perspectives, and how aware are you of global and social issues?'
+      question: 'How open are you to diverse perspectives, and how aware are you of global and social issues?',
+      detail: `<p>Global and social awareness means recognising that decisions have implications beyond the immediate — for people, communities, and the environment. It involves being curious about perspectives that differ from your own, understanding how cultural differences shape communication and expectation, and thinking about ethical and sustainability impacts alongside performance.</p>
+<p><strong>What this looks like in practice:</strong></p>
+<ul>
+  <li>Actively seeking out viewpoints that differ from your own</li>
+  <li>Staying curious about global events and how they connect to your field</li>
+  <li>Recognising how cultural differences shape communication and expectation</li>
+  <li>Thinking about sustainability and ethical impact alongside commercial outcomes</li>
+  <li>Being genuinely inclusive and respectful of difference in all its forms</li>
+</ul>
+<p><em>Employers value this because today's organisations operate across borders and face growing scrutiny over their social and environmental impact. Globally and socially aware graduates make better decisions, build more inclusive teams, and contribute to more ethical, sustainable organisations.</em></p>`
     }
   ];
 
@@ -874,7 +1038,7 @@
         <div class="q-card-header">
           <div class="q-icon" style="background:${attr.bg}; color:${attr.color};">${attr.icon}</div>
           <div>
-            <div class="q-title">${attr.name}</div>
+            <div class="q-title">${attr.name} <button class="info-btn" onclick="openAttrModal(${idx})" aria-label="More about ${attr.name}">ⓘ</button></div>
             <div class="q-desc">${attr.desc}</div>
           </div>
         </div>
@@ -1129,6 +1293,31 @@
     refreshChartSummary();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  /* ── Attribute info modal ──────────────────────────────── */
+
+  function openAttrModal(idx) {
+    const attr = ATTRIBUTES[idx];
+    const icon = document.getElementById('modalIcon');
+    icon.style.background = attr.bg;
+    icon.style.color = attr.color;
+    icon.textContent = attr.icon;
+    document.getElementById('modalTitle').textContent = attr.name;
+    document.getElementById('modalBody').innerHTML = attr.detail;
+    document.getElementById('attrModal').classList.remove('hidden');
+  }
+
+  function closeAttrModal(e) {
+    if (e instanceof Event && e.target !== document.getElementById('attrModal')) return;
+    document.getElementById('attrModal').classList.add('hidden');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('attrModal');
+      if (modal && !modal.classList.contains('hidden')) modal.classList.add('hidden');
+    }
+  });
 
   /* ── Init ──────────────────────────────────────────────── */
 
