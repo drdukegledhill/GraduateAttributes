@@ -450,6 +450,10 @@
           <div class="dots-row" id="dotsRow"></div>
         </div>
 
+        <div id="viewProgressWrap" class="hidden" style="text-align:right; margin: -4px 0 10px;">
+          <button class="btn btn-outline" style="padding:6px 16px; font-size:0.8rem;" onclick="showProgress()">View progress</button>
+        </div>
+
         <div id="questionnaire"></div>
 
         <div class="submit-section">
@@ -469,7 +473,10 @@
       <!-- Post-submission -->
       <div id="postSubmission" class="hidden">
         <div class="success-card">
-          <div class="success-icon">🎉</div>
+          <div id="backToFormWrap" class="hidden" style="text-align:left; margin-bottom:14px;">
+            <button class="btn btn-outline" style="padding:6px 16px; font-size:0.8rem;" onclick="backToAssessment()">← Back to assessment</button>
+          </div>
+          <div class="success-icon" id="successIcon">🎉</div>
           <h2 id="successTitle">Assessment 1 saved!</h2>
           <p class="sub" id="successSub">Bookmark the URL below to return and complete your next assessment later.</p>
 
@@ -498,6 +505,7 @@
             <div style="position:relative; height:220px;">
               <canvas id="progressChart"></canvas>
             </div>
+            <div id="progressChartLegend" class="chart-legend" style="margin-top:10px;"></div>
           </div>
         </div>
       </div>
@@ -825,6 +833,8 @@
 
     document.getElementById('assessmentView').classList.add('hidden');
     document.getElementById('postSubmission').classList.remove('hidden');
+    document.getElementById('backToFormWrap').classList.add('hidden');
+    document.getElementById('successIcon').textContent = '🎉';
 
     document.getElementById('successTitle').textContent = `Assessment ${n} saved!`;
     document.getElementById('bookmarkUrl').textContent = url;
@@ -868,9 +878,46 @@
     buildQuestions();
     updateProgress();
     updateBanner(historical.length + 1);
+    updateViewProgressBtn();
     initChart();
     refreshChartSummary();
 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── View progress (without submitting) ───────────────── */
+
+  function updateViewProgressBtn() {
+    document.getElementById('viewProgressWrap').classList.toggle('hidden', historical.length < 2);
+  }
+
+  function showProgress() {
+    const n = historical.length;
+    document.getElementById('assessmentView').classList.add('hidden');
+    document.getElementById('postSubmission').classList.remove('hidden');
+    document.getElementById('backToFormWrap').classList.remove('hidden');
+    document.getElementById('successIcon').textContent = '📊';
+    document.getElementById('successTitle').textContent = 'Your progress';
+    document.getElementById('successSub').textContent =
+      `${n} assessment${n > 1 ? 's' : ''} completed. Bookmark your URL to return anytime.`;
+    document.getElementById('bookmarkUrl').textContent = buildUrl(historical);
+    document.getElementById('nextNum').textContent = n + 1;
+    if (n >= 5) {
+      document.getElementById('nextBtnWrap').classList.add('hidden');
+    } else {
+      document.getElementById('nextBtnWrap').classList.remove('hidden');
+    }
+    document.getElementById('compareSection').classList.remove('hidden');
+    buildCompareGrid();
+    document.getElementById('progressChartSection').classList.remove('hidden');
+    buildProgressChart();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function backToAssessment() {
+    document.getElementById('postSubmission').classList.add('hidden');
+    document.getElementById('backToFormWrap').classList.add('hidden');
+    document.getElementById('assessmentView').classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -893,6 +940,13 @@
       pointHoverRadius:   7,
       tension:            0.35
     }));
+
+    document.getElementById('progressChartLegend').innerHTML = ATTRIBUTES.map(attr =>
+      `<div class="legend-item">
+        <div class="legend-swatch" style="background:${attr.color}; height:3px;"></div>
+        <span>${attr.name}</span>
+      </div>`
+    ).join('');
 
     progressChart = new Chart(document.getElementById('progressChart'), {
       type: 'line',
@@ -965,6 +1019,7 @@
       buildQuestions();
       updateBanner(historical.length + 1);
       updateProgress();
+      updateViewProgressBtn();
     }
   }
 
