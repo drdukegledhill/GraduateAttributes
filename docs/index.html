@@ -912,10 +912,15 @@
     if (n >= 5) {
       document.getElementById('successSub').textContent = "You've completed all 5 assessments — amazing progress!";
       document.getElementById('nextBtnWrap').classList.add('hidden');
+    } else if (n === 1) {
+      document.getElementById('successSub').textContent =
+        'Bookmark the URL below, then come back to complete Assessment 2.';
+      document.getElementById('nextNum').textContent = 2;
+      document.getElementById('nextBtnWrap').classList.remove('hidden');
     } else {
       document.getElementById('successSub').textContent =
-        `Bookmark the URL below, then come back to complete Assessment ${n + 1} later.`;
-      document.getElementById('nextNum').textContent = n + 1;
+        `Bookmark the URL below. Use the Assessment tab when you're ready for round ${n + 1}.`;
+      document.getElementById('nextBtnWrap').classList.add('hidden');
     }
 
     if (n > 1) {
@@ -977,12 +982,18 @@
       document.getElementById('successSub').textContent =
         `${n} assessment${n > 1 ? 's' : ''} completed. Bookmark your URL to return anytime.`;
       document.getElementById('bookmarkUrl').textContent = buildUrl(historical);
-      document.getElementById('nextNum').textContent = n + 1;
-      document.getElementById('nextBtnWrap').classList.toggle('hidden', n >= 5);
+      document.getElementById('nextBtnWrap').classList.add('hidden');
       document.getElementById('compareSection').classList.remove('hidden');
       buildCompareGrid();
       document.getElementById('progressChartSection').classList.remove('hidden');
       buildProgressChart();
+    } else {
+      // Rebuild the form if this round hasn't been started yet
+      if (current.every(v => v === null)) {
+        buildQuestions();
+        updateBanner(historical.length + 1);
+        updateProgress();
+      }
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
