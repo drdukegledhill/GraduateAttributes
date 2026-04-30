@@ -141,4 +141,4 @@ npx serve docs
 
 [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](LICENSE)
 
-© Dr Duke Gledhill. Free to use and adapt for non-commercial educational purposes with attribution.
+© Dr Duke Gledhill. Free to use and adapt for non-commercial purposes with attribution.

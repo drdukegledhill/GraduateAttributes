@@ -10,6 +10,7 @@
 
     :root {
       --primary: #1c3d6e;
+      --primary-ink: #1c3d6e;
       --accent:  #e05c2a;
       --teal:    #2a9d8f;
       --bg:      #f0f4f8;
@@ -17,6 +18,11 @@
       --text:    #1a1a2e;
       --muted:   #5a6a7e;
       --border:  #d0d9e4;
+      --score-1: #b91c1c;
+      --score-2: #c2410c;
+      --score-3: #a16207;
+      --score-4: #3f6212;
+      --score-5: #166534;
       --radius:  12px;
       --shadow:  0 2px 14px rgba(0,0,0,0.08);
     }
@@ -28,6 +34,7 @@
       --muted:  #9ca3af;
       --border: #374151;
       --shadow: 0 2px 14px rgba(0,0,0,0.35);
+      --primary-ink: #93c5fd;
     }
 
     body {
@@ -104,7 +111,7 @@
     .chart-card h2 {
       font-size: 0.95rem;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--primary-ink);
       margin-bottom: 2px;
     }
 
@@ -256,7 +263,7 @@
       line-height: 1.2;
     }
 
-    .rating-btn:hover .pip { border-color: var(--primary); color: var(--primary); }
+    .rating-btn:hover .pip { border-color: var(--primary-ink); color: var(--primary-ink); }
 
     .rating-btn input:checked + .pip {
       border-color: transparent;
@@ -341,7 +348,7 @@
     }
 
     .success-icon { font-size: 2.6rem; margin-bottom: 10px; }
-    .success-card h2 { font-size: 1.15rem; color: var(--primary); margin-bottom: 6px; }
+    .success-card h2 { font-size: 1.15rem; color: var(--primary-ink); margin-bottom: 6px; }
     .success-card .sub {
       font-size: 0.84rem; color: var(--muted);
       line-height: 1.5; margin-bottom: 18px;
@@ -400,7 +407,14 @@
       font-size: 0.78rem;
     }
 
-    .compare-attr { flex: 0 0 130px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .compare-attr {
+      flex: 0 0 180px;
+      font-weight: 600;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      line-height: 1.25;
+    }
 
     .compare-bars { display: flex; gap: 4px; flex: 1; }
 
@@ -413,6 +427,12 @@
       flex-shrink: 0;
     }
 
+    .bar-pip.score-1 { background: var(--score-1); }
+    .bar-pip.score-2 { background: var(--score-2); }
+    .bar-pip.score-3 { background: var(--score-3); }
+    .bar-pip.score-4 { background: var(--score-4); }
+    .bar-pip.score-5 { background: var(--score-5); }
+
     .bar-pip.empty { background: var(--border); color: var(--muted); }
 
     /* ── All-done / max-reached ─────────────────────── */
@@ -424,7 +444,7 @@
       text-align: center;
     }
     .done-card .icon   { font-size: 3rem; margin-bottom: 12px; }
-    .done-card h2      { color: var(--primary); font-size: 1.2rem; margin-bottom: 8px; }
+    .done-card h2      { color: var(--primary-ink); font-size: 1.2rem; margin-bottom: 8px; }
     .done-card p       { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
 
     /* ── Mode switcher ───────────────────────────────── */
@@ -451,7 +471,7 @@
 
     .mode-btn.active {
       background: var(--card);
-      color: var(--primary);
+      color: var(--primary-ink);
       box-shadow: 0 1px 4px rgba(0,0,0,0.12);
     }
 
@@ -518,7 +538,7 @@
       flex-shrink: 0;
     }
 
-    .attr-modal-title { font-size: 1.05rem; font-weight: 700; color: var(--primary); }
+    .attr-modal-title { font-size: 1.05rem; font-weight: 700; color: var(--primary-ink); }
 
     .attr-modal-close {
       position: absolute;
@@ -540,7 +560,7 @@
     .attr-modal-body p { margin-bottom: 10px; }
     .attr-modal-body ul { padding-left: 18px; margin-bottom: 10px; }
     .attr-modal-body li { margin-bottom: 5px; }
-    .attr-modal-body strong { color: var(--primary); }
+    .attr-modal-body strong { color: var(--primary-ink); }
     .attr-modal-body em { color: var(--muted); }
 
     .info-btn {
@@ -557,7 +577,7 @@
       margin-left: 5px;
       font-weight: 600;
     }
-    .info-btn:hover { color: var(--primary); border-color: var(--primary); background: var(--bg); }
+    .info-btn:hover { color: var(--primary-ink); border-color: var(--primary-ink); background: var(--bg); }
 
     /* ── Utility ─────────────────────────────────────── */
     .hidden { display: none !important; }
@@ -651,14 +671,14 @@
           <!-- Comparison table (shown when >1 attempt) -->
           <div id="compareSection" class="hidden">
             <hr style="border:none; border-top:1px solid var(--border); margin: 20px 0 16px;">
-            <p style="font-size:0.82rem; font-weight:700; color:var(--primary); text-align:left; margin-bottom:8px;">Progress so far</p>
+            <p style="font-size:0.82rem; font-weight:700; color:var(--primary-ink); text-align:left; margin-bottom:8px;">Progress so far</p>
             <div class="compare-grid" id="compareGrid"></div>
           </div>
 
           <!-- Progress line chart (shown when >1 attempt) -->
           <div id="progressChartSection" class="hidden">
             <hr style="border:none; border-top:1px solid var(--border); margin: 20px 0 16px;">
-            <p style="font-size:0.82rem; font-weight:700; color:var(--primary); text-align:left; margin-bottom:12px;">Score trends</p>
+            <p style="font-size:0.82rem; font-weight:700; color:var(--primary-ink); text-align:left; margin-bottom:12px;">Score trends</p>
             <div style="position:relative; height:220px;">
               <canvas id="progressChart"></canvas>
             </div>
@@ -681,7 +701,7 @@
 </main>
 
 <footer>
-  <p>© Dr Duke Gledhill &nbsp;·&nbsp; <button class="reset-btn" onclick="resetAll()">Reset all data</button></p>
+  <p>© <a class="reset-btn" href="https://drduke.uk" target="_blank" rel="noopener noreferrer">Dr Duke Gledhill</a> &nbsp;·&nbsp; <button class="reset-btn" onclick="resetAll()">Reset all data</button></p>
 </footer>
 
 <!-- Attribute info modal -->
@@ -879,7 +899,8 @@
   function buildUrl(attempts) {
     const p = new URLSearchParams();
     attempts.forEach((a, i) => p.set('v' + (i + 1), a.join('')));
-    return location.origin + location.pathname + '?' + p.toString();
+    const base = location.href.split('?')[0];
+    return base + '?' + p.toString();
   }
 
   /* ── Chart ─────────────────────────────────────────────── */
@@ -1257,8 +1278,7 @@
 
       const pips = historical.map((attempt, hi) => {
         const v = attempt[ai];
-        const col = ATTEMPT_STYLES[hi].border;
-        return `<div class="bar-pip" style="background:${col}" title="Check-in ${hi+1}: ${v}/5">${v}</div>`;
+        return `<div class="bar-pip score-${v}" title="Check-in ${hi+1}: ${v}/5">${v}</div>`;
       }).join('');
 
       row.innerHTML = `
@@ -1273,7 +1293,7 @@
 
   function resetAll() {
     if (!confirm('This will clear all your check-in data and cannot be undone. Continue?')) return;
-    history.replaceState(null, '', location.pathname);
+    history.replaceState(null, '', location.href.split('?')[0]);
     historical = [];
     current    = new Array(7).fill(null);
     document.getElementById('postSubmission').classList.add('hidden');
