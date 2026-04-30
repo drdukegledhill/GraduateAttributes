@@ -1102,15 +1102,11 @@
     if (n >= 5) {
       document.getElementById('successSub').textContent = "You've completed all 5 assessments. Amazing progress!";
       document.getElementById('nextBtnWrap').classList.add('hidden');
-    } else if (n === 1) {
-      document.getElementById('successSub').textContent =
-        'Bookmark the URL below, then come back to complete Assessment 2.';
-      document.getElementById('nextNum').textContent = 2;
-      document.getElementById('nextBtnWrap').classList.remove('hidden');
     } else {
       document.getElementById('successSub').textContent =
-        `Bookmark the URL below. Use the Assessment tab when you're ready for round ${n + 1}.`;
-      document.getElementById('nextBtnWrap').classList.add('hidden');
+        'Bookmark the URL below to save your progress.';
+      document.getElementById('nextNum').textContent = n + 1;
+      document.getElementById('nextBtnWrap').classList.remove('hidden');
     }
 
     if (n > 1) {
