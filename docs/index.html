@@ -10,15 +10,15 @@
 
     :root {
       --primary: #1c3d6e;
-      --accent: #e05c2a;
-      --accent2: #2a9d8f;
-      --bg: #f0f4f8;
-      --card: #ffffff;
-      --text: #1a1a2e;
-      --muted: #5a6a7e;
-      --border: #d0d9e4;
-      --radius: 12px;
-      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+      --accent:  #e05c2a;
+      --teal:    #2a9d8f;
+      --bg:      #f0f4f8;
+      --card:    #ffffff;
+      --text:    #1a1a2e;
+      --muted:   #5a6a7e;
+      --border:  #d0d9e4;
+      --radius:  12px;
+      --shadow:  0 2px 14px rgba(0,0,0,0.08);
     }
 
     body {
@@ -26,297 +26,391 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding: 0 0 60px;
+      padding-bottom: 60px;
     }
+
+    /* ── Header ──────────────────────────────────────── */
 
     header {
       background: var(--primary);
       color: white;
-      padding: 32px 24px 28px;
+      padding: 24px 20px 20px;
       text-align: center;
     }
 
-    header h1 {
-      font-size: clamp(1.4rem, 4vw, 2rem);
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
+    header h1 { font-size: clamp(1.3rem, 4vw, 1.9rem); font-weight: 700; }
+    header p  { font-size: 0.88rem; opacity: 0.8; margin-top: 6px; max-width: 520px; margin-inline: auto; line-height: 1.5; }
 
-    header p {
-      margin-top: 8px;
-      font-size: 0.95rem;
-      opacity: 0.82;
-      max-width: 520px;
-      margin-inline: auto;
-      line-height: 1.5;
-    }
+    /* ── Two-column layout ───────────────────────────── */
 
-    .progress-bar-wrap {
-      background: rgba(255,255,255,0.15);
-      border-radius: 100px;
-      height: 6px;
-      width: min(300px, 80vw);
-      margin: 18px auto 0;
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      background: var(--accent);
-      height: 100%;
-      border-radius: 100px;
-      transition: width 0.4s ease;
-      width: 0%;
-    }
-
-    .progress-label {
-      font-size: 0.78rem;
-      opacity: 0.7;
-      margin-top: 6px;
-      text-align: center;
-    }
-
-    main {
-      max-width: 660px;
+    .layout {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 16px 0;
+      max-width: 1080px;
       margin: 0 auto;
-      padding: 0 16px;
     }
 
-    /* ── Question cards ─────────────────────────────── */
+    @media (min-width: 780px) {
+      .layout {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 24px;
+        padding: 24px 24px 0;
+      }
+      .chart-panel {
+        flex: 0 0 340px;
+        position: sticky;
+        top: 24px;
+      }
+      .questions-panel { flex: 1; min-width: 0; }
+    }
 
-    #questionnaire { padding-top: 28px; }
+    /* ── Cards ───────────────────────────────────────── */
 
     .card {
       background: var(--card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 22px 20px 20px;
-      margin-bottom: 16px;
-      border: 1.5px solid transparent;
-      transition: border-color 0.2s;
+      padding: 18px 18px 16px;
     }
 
-    .card.answered { border-color: var(--accent2); }
+    /* ── Chart card ──────────────────────────────────── */
 
-    .card-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
+    .chart-card h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .chart-summary {
+      font-size: 0.75rem;
+      color: var(--muted);
       margin-bottom: 10px;
+      line-height: 1.4;
     }
 
-    .attr-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 300px;
+      aspect-ratio: 1;
+      margin: 0 auto;
+    }
+
+    /* empty-state overlay */
+    .chart-empty {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 20px;
+      pointer-events: none;
+    }
+
+    .chart-legend {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--text);
+    }
+
+    .legend-swatch {
+      width: 22px;
+      height: 3px;
+      border-radius: 2px;
       flex-shrink: 0;
     }
 
-    .card-title { font-size: 1rem; font-weight: 700; line-height: 1.3; }
-    .card-desc  { font-size: 0.82rem; color: var(--muted); margin-top: 2px; line-height: 1.4; }
-    .card-question { font-size: 0.9rem; color: var(--text); margin-bottom: 14px; line-height: 1.5; }
+    /* ── Assessment banner ───────────────────────────── */
 
-    /* Rating row */
+    .assessment-banner {
+      background: var(--primary);
+      color: white;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .assessment-banner h3 { font-size: 0.95rem; font-weight: 700; }
+    .assessment-banner p  { font-size: 0.78rem; opacity: 0.8; margin-top: 2px; }
+
+    .dots-row { display: flex; gap: 7px; flex-shrink: 0; }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.35);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .dot.done    { background: var(--teal); border-color: var(--teal); }
+    .dot.current { background: white;       border-color: white; }
+    .dot.future  { background: transparent; }
+
+    /* ── Question cards ──────────────────────────────── */
+
+    .q-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-bottom: 10px;
+      border: 1.5px solid transparent;
+      transition: border-color 0.25s;
+    }
+
+    .q-card.answered { border-color: var(--teal); }
+
+    .q-card-header {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 9px;
+    }
+
+    .q-icon {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+
+    .q-title    { font-size: 0.92rem; font-weight: 700; }
+    .q-desc     { font-size: 0.76rem; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+    .q-question { font-size: 0.84rem; margin-bottom: 11px; line-height: 1.5; color: var(--text); }
+
+    /* ── Rating buttons ──────────────────────────────── */
+
     .rating-row {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 7px;
+      gap: 6px;
     }
 
     .rating-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 3px;
       cursor: pointer;
     }
 
     .rating-btn input[type="radio"] { display: none; }
 
     .rating-btn .pip {
-      width: 100%;
-      aspect-ratio: 1;
-      max-width: 52px;
-      border-radius: 10px;
+      width: 100%; aspect-ratio: 1; max-width: 48px;
+      border-radius: 9px;
       border: 2px solid var(--border);
       background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem; font-weight: 700;
       color: var(--muted);
-      transition: all 0.15s ease;
+      transition: all 0.14s;
       user-select: none;
       margin: 0 auto;
     }
 
-    .rating-btn .lbl {
-      font-size: 0.65rem;
+    .rating-btn .pip-lbl {
+      font-size: 0.58rem;
       color: var(--muted);
       text-align: center;
       line-height: 1.2;
     }
 
+    .rating-btn:hover .pip { border-color: var(--primary); color: var(--primary); }
+
     .rating-btn input:checked + .pip {
       border-color: transparent;
       color: white;
-      transform: scale(1.08);
+      transform: scale(1.1);
     }
 
-    .rating-btn:hover .pip {
-      border-color: var(--primary);
+    .q-card[data-idx="0"] .rating-btn input:checked + .pip { background: #e84393; }
+    .q-card[data-idx="1"] .rating-btn input:checked + .pip { background: #e05c2a; }
+    .q-card[data-idx="2"] .rating-btn input:checked + .pip { background: #d68910; }
+    .q-card[data-idx="3"] .rating-btn input:checked + .pip { background: #2a9d8f; }
+    .q-card[data-idx="4"] .rating-btn input:checked + .pip { background: #457b9d; }
+    .q-card[data-idx="5"] .rating-btn input:checked + .pip { background: #6a4c93; }
+    .q-card[data-idx="6"] .rating-btn input:checked + .pip { background: #1c7c54; }
+
+    /* ── Progress + submit ───────────────────────────── */
+
+    .submit-section { padding: 8px 0 4px; }
+
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .progress-text { font-size: 0.78rem; color: var(--muted); }
+
+    .progress-track {
+      background: var(--border);
+      border-radius: 100px;
+      height: 5px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .progress-fill {
+      background: var(--accent);
+      height: 100%;
+      border-radius: 100px;
+      transition: width 0.35s ease;
+      width: 0%;
+    }
+
+    .submit-row { text-align: center; }
+
+    .btn {
+      border: none; border-radius: 100px;
+      padding: 12px 28px;
+      font-size: 0.9rem; font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: #24508f; }
+    .btn-primary:active { transform: scale(0.97); }
+    .btn-primary:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
       color: var(--primary);
     }
-
-    /* coloured selected states per attribute */
-    .card[data-index="0"] .rating-btn input:checked + .pip { background: #e84393; }
-    .card[data-index="1"] .rating-btn input:checked + .pip { background: #e05c2a; }
-    .card[data-index="2"] .rating-btn input:checked + .pip { background: #f4a261; color: #333; }
-    .card[data-index="3"] .rating-btn input:checked + .pip { background: #2a9d8f; }
-    .card[data-index="4"] .rating-btn input:checked + .pip { background: #457b9d; }
-    .card[data-index="5"] .rating-btn input:checked + .pip { background: #6a4c93; }
-    .card[data-index="6"] .rating-btn input:checked + .pip { background: #1c7c54; }
-
-    /* Submit */
-    .submit-wrap {
-      text-align: center;
-      padding: 8px 0 4px;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 100px;
-      padding: 14px 36px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      letter-spacing: 0.01em;
-    }
-
-    .btn-primary:hover   { background: #24508f; }
-    .btn-primary:active  { transform: scale(0.97); }
-    .btn-primary:disabled {
-      background: var(--border);
-      color: var(--muted);
-      cursor: not-allowed;
-    }
+    .btn-outline:hover { background: var(--primary); color: white; }
 
     .validation-msg {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       color: var(--accent);
-      margin-top: 10px;
-    }
-
-    /* ── Results ────────────────────────────────────── */
-
-    #results {
+      margin-top: 8px;
       display: none;
-      padding-top: 28px;
     }
 
-    #results.visible { display: block; }
+    /* ── Post-submission panel ───────────────────────── */
 
-    .results-card {
+    .success-card {
       background: var(--card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 24px 20px;
+      text-align: center;
+    }
+
+    .success-icon { font-size: 2.6rem; margin-bottom: 10px; }
+    .success-card h2 { font-size: 1.15rem; color: var(--primary); margin-bottom: 6px; }
+    .success-card .sub {
+      font-size: 0.84rem; color: var(--muted);
+      line-height: 1.5; margin-bottom: 18px;
+    }
+
+    .url-box {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
       margin-bottom: 16px;
     }
 
-    .results-card h2 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-      color: var(--primary);
-    }
-
-    .results-card .subtitle {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-
-    .chart-wrap {
-      position: relative;
-      width: 100%;
-      max-width: 420px;
-      margin: 0 auto;
-      aspect-ratio: 1;
-    }
-
-    /* Score summary grid */
-    .score-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    @media (min-width: 480px) {
-      .score-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    .score-item {
-      border-radius: 10px;
-      padding: 12px 10px;
-      text-align: center;
-    }
-
-    .score-item .score-num {
-      font-size: 1.5rem;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .score-item .score-name {
-      font-size: 0.7rem;
-      font-weight: 600;
-      margin-top: 4px;
-      line-height: 1.3;
-    }
-
-    .score-item .score-level {
+    .url-text {
+      font-family: 'Menlo', 'Courier New', monospace;
       font-size: 0.68rem;
-      opacity: 0.7;
-      margin-top: 2px;
+      color: var(--text);
+      flex: 1;
+      word-break: break-all;
+      line-height: 1.4;
     }
 
-    /* Retake */
-    .retake-wrap {
-      text-align: center;
-      margin-top: 8px;
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--primary);
-      border: 2px solid var(--primary);
-      border-radius: 100px;
-      padding: 11px 28px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-outline:hover {
+    .copy-btn {
       background: var(--primary);
       color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.18s;
+    }
+    .copy-btn:hover    { background: #24508f; }
+    .copy-btn.copied   { background: var(--teal); }
+
+    .next-btn-wrap { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    /* comparison score grid */
+    .compare-grid {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+      text-align: left;
     }
 
-    /* ── Responsive tweaks ──────────────────────────── */
+    .compare-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+    }
 
-    @media (max-width: 400px) {
-      .rating-btn .lbl { display: none; }
-      .rating-row { gap: 5px; }
+    .compare-attr { flex: 0 0 130px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .compare-bars { display: flex; gap: 4px; flex: 1; }
+
+    .bar-pip {
+      width: 22px; height: 22px;
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .bar-pip.empty { background: var(--border); color: var(--muted); }
+
+    /* ── All-done / max-reached ─────────────────────── */
+    .done-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .done-card .icon   { font-size: 3rem; margin-bottom: 12px; }
+    .done-card h2      { color: var(--primary); font-size: 1.2rem; margin-bottom: 8px; }
+    .done-card p       { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+
+    /* ── Utility ─────────────────────────────────────── */
+    .hidden { display: none !important; }
+
+    @media (max-width: 380px) {
+      .rating-btn .pip-lbl { display: none; }
+      .rating-row { gap: 4px; }
+      .compare-attr { flex-basis: 100px; }
     }
   </style>
 </head>
@@ -324,311 +418,492 @@
 
 <header>
   <h1>Graduate Attributes</h1>
-  <p>Rate yourself honestly on each attribute. There are no right or wrong answers — this is about understanding where you are right now.</p>
-  <div class="progress-bar-wrap">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-  <p class="progress-label" id="progressLabel">0 of 7 answered</p>
+  <p>Complete up to 5 self-assessments across the year and watch your profile develop.</p>
 </header>
 
 <main>
+  <div class="layout">
 
-  <!-- Questionnaire -->
-  <section id="questionnaire">
-
-    <!-- Cards injected by JS -->
-
-    <div class="submit-wrap" id="submitWrap">
-      <button class="btn-primary" id="submitBtn" disabled onclick="showResults()">
-        Generate My Profile
-      </button>
-      <p class="validation-msg" id="validationMsg"></p>
-    </div>
-  </section>
-
-  <!-- Results -->
-  <section id="results">
-    <div class="results-card">
-      <h2>Your Graduate Attributes Profile</h2>
-      <p class="subtitle">Here's how you see yourself right now. Use this as a starting point for your development journey.</p>
-      <div class="chart-wrap">
-        <canvas id="radarChart"></canvas>
+    <!-- ── Left: sticky chart ─────────────────────── -->
+    <aside class="chart-panel">
+      <div class="card chart-card">
+        <h2>Your Profile</h2>
+        <p class="chart-summary" id="chartSummary">Answer the questions — your chart will update in real time.</p>
+        <div class="chart-wrap">
+          <canvas id="radarChart"></canvas>
+          <div class="chart-empty" id="chartEmpty">Your profile will appear here as you answer each question.</div>
+        </div>
+        <div class="chart-legend" id="chartLegend"></div>
       </div>
-    </div>
+    </aside>
 
-    <div class="results-card">
-      <h2>Score Breakdown</h2>
-      <p class="subtitle">Your self-assessed level for each attribute (1 = Just Starting, 5 = Excelling)</p>
-      <div class="score-grid" id="scoreGrid"></div>
-    </div>
+    <!-- ── Right: questions / results ────────────── -->
+    <div class="questions-panel" id="questionsPanel">
 
-    <div class="retake-wrap">
-      <button class="btn-outline" onclick="retake()">Retake Assessment</button>
-    </div>
-  </section>
+      <!-- Active assessment -->
+      <div id="assessmentView">
+        <div class="assessment-banner" id="assessmentBanner">
+          <div>
+            <h3 id="bannerTitle">Assessment 1 of 5</h3>
+            <p>Rate yourself honestly — there are no right or wrong answers.</p>
+          </div>
+          <div class="dots-row" id="dotsRow"></div>
+        </div>
 
+        <div id="questionnaire"></div>
+
+        <div class="submit-section">
+          <div class="progress-row">
+            <span class="progress-text" id="progressText">0 of 7 answered</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="submit-row">
+            <button class="btn btn-primary" id="submitBtn" disabled onclick="handleSubmit()">Save Assessment</button>
+            <p class="validation-msg" id="validationMsg">Please answer all 7 questions first.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post-submission -->
+      <div id="postSubmission" class="hidden">
+        <div class="success-card">
+          <div class="success-icon">🎉</div>
+          <h2 id="successTitle">Assessment 1 saved!</h2>
+          <p class="sub" id="successSub">Bookmark the URL below to return and complete your next assessment later.</p>
+
+          <div class="url-box">
+            <span class="url-text" id="bookmarkUrl"></span>
+            <button class="copy-btn" id="copyBtn" onclick="copyUrl()">Copy</button>
+          </div>
+
+          <div class="next-btn-wrap" id="nextBtnWrap">
+            <button class="btn btn-primary" onclick="startNext()">
+              Start Assessment <span id="nextNum">2</span>
+            </button>
+          </div>
+
+          <!-- Comparison table (shown when >1 attempt) -->
+          <div id="compareSection" class="hidden">
+            <hr style="border:none; border-top:1px solid var(--border); margin: 20px 0 16px;">
+            <p style="font-size:0.82rem; font-weight:700; color:var(--primary); text-align:left; margin-bottom:8px;">Progress so far</p>
+            <div class="compare-grid" id="compareGrid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- All 5 done (loaded via URL) -->
+      <div id="allDone" class="hidden">
+        <div class="done-card">
+          <div class="icon">🏆</div>
+          <h2>All assessments complete</h2>
+          <p>You've completed all 5 assessments — your full year profile is shown in the chart.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </main>
 
 <script>
+  /* ── Data ──────────────────────────────────────────────── */
+
   const ATTRIBUTES = [
     {
-      name: "Self-motivated",
-      icon: "🎯",
-      color: "#e84393",
-      bg: "#fde8f4",
-      desc: "You have the ability to do what needs to be done without being prompted by others.",
-      question: "How well do you drive your own work and development without needing others to push you?"
+      name: 'Self-motivated',       icon: '🎯', color: '#e84393', bg: '#fde8f4',
+      desc: 'You have the ability to do what needs to be done without being prompted by others.',
+      question: 'How well do you drive your own work and development without needing others to push you?'
     },
     {
-      name: "Commercially aware",
-      icon: "🌐",
-      color: "#e05c2a",
-      bg: "#fdeee8",
-      desc: "You understand the wider environment in which an organisation operates.",
-      question: "How confident are you in understanding the pressures and opportunities facing organisations today?"
+      name: 'Commercially aware',   icon: '🌐', color: '#e05c2a', bg: '#fdeee8',
+      desc: 'You understand the wider environment in which an organisation operates.',
+      question: 'How confident are you in understanding the pressures and opportunities facing organisations today?'
     },
     {
-      name: "Enterprising",
-      icon: "💡",
-      color: "#f4a261",
-      bg: "#fef5ec",
-      desc: "You are able to adapt your thinking and behaviour to suit changing circumstances.",
-      question: "How well do you adapt your thinking and approach when situations change or new opportunities arise?"
+      name: 'Enterprising',         icon: '💡', color: '#d68910', bg: '#fef5ec',
+      desc: 'You are able to adapt your thinking and behaviour to suit changing circumstances.',
+      question: 'How well do you adapt your thinking and approach when situations change or new opportunities arise?'
     },
     {
-      name: "Resilient",
-      icon: "🏋️",
-      color: "#2a9d8f",
-      bg: "#e8f6f5",
-      desc: "You are driven, resolute and determined and able to deal positively with challenges.",
-      question: "How effectively do you deal with setbacks, pressure, and difficult challenges?"
+      name: 'Resilient',            icon: '🏋️', color: '#2a9d8f', bg: '#e8f6f5',
+      desc: 'You are driven, resolute and determined and able to deal positively with challenges.',
+      question: 'How effectively do you deal with setbacks, pressure, and difficult challenges?'
     },
     {
-      name: "Effective collaborator",
-      icon: "🤝",
-      color: "#457b9d",
-      bg: "#eaf2f8",
-      desc: "You work well with others and have effective interpersonal skills.",
-      question: "How well do you work within teams and build productive, positive relationships with others?"
+      name: 'Effective collaborator', icon: '🤝', color: '#457b9d', bg: '#eaf2f8',
+      desc: 'You work well with others and have effective interpersonal skills.',
+      question: 'How well do you work within teams and build productive, positive relationships with others?'
     },
     {
-      name: "Confident leader",
-      icon: "🚀",
-      color: "#6a4c93",
-      bg: "#f2edf9",
-      desc: "You are able to enthuse a group and motivate them to work towards an identified goal.",
-      question: "How confident are you in stepping up to lead, motivate, and guide others towards a shared goal?"
+      name: 'Confident leader',     icon: '🚀', color: '#6a4c93', bg: '#f2edf9',
+      desc: 'You are able to enthuse a group and motivate them to work towards an identified goal.',
+      question: 'How confident are you in stepping up to lead, motivate, and guide others towards a shared goal?'
     },
     {
-      name: "Globally & socially aware",
-      icon: "🌍",
-      color: "#1c7c54",
-      bg: "#e8f5ef",
-      desc: "You welcome new ways of thinking and can anticipate the impact of external situations.",
-      question: "How open are you to diverse perspectives, and how aware are you of global and social issues?"
+      name: 'Globally & socially aware', icon: '🌍', color: '#1c7c54', bg: '#e8f5ef',
+      desc: 'You welcome new ways of thinking and can anticipate the impact of external situations.',
+      question: 'How open are you to diverse perspectives, and how aware are you of global and social issues?'
     }
   ];
 
   const LEVELS = [
-    { value: 1, label: "Just\nStarting" },
-    { value: 2, label: "Developing" },
-    { value: 3, label: "Progressing" },
-    { value: 4, label: "Confident" },
-    { value: 5, label: "Excelling" }
+    { v: 1, lbl: 'Just\nStarting' },
+    { v: 2, lbl: 'Developing'    },
+    { v: 3, lbl: 'Progressing'   },
+    { v: 4, lbl: 'Confident'     },
+    { v: 5, lbl: 'Excelling'     }
   ];
 
-  const answers = new Array(ATTRIBUTES.length).fill(null);
-  let radarChart = null;
+  /* Each historical attempt gets a distinct solid colour */
+  const ATTEMPT_STYLES = [
+    { border: '#8ecae6', bg: 'rgba(142,202,230,0.10)', label: 'Assessment 1' },
+    { border: '#219ebc', bg: 'rgba(33,158,188,0.10)',  label: 'Assessment 2' },
+    { border: '#2a9d8f', bg: 'rgba(42,157,143,0.10)',  label: 'Assessment 3' },
+    { border: '#6a4c93', bg: 'rgba(106,76,147,0.12)',  label: 'Assessment 4' },
+    { border: '#1c3d6e', bg: 'rgba(28,61,110,0.14)',   label: 'Assessment 5' }
+  ];
 
-  // ── Build question cards ──────────────────────────
+  /* Current in-progress: orange dashed */
+  const CUR = { border: '#e05c2a', bg: 'rgba(224,92,42,0.07)' };
 
-  function buildCards() {
-    const section = document.getElementById('questionnaire');
-    const submitWrap = document.getElementById('submitWrap');
+  /* Multi-line labels keep the chart readable on small screens */
+  const CHART_LABELS = [
+    'Self-motivated',
+    ['Commercially', 'aware'],
+    'Enterprising',
+    'Resilient',
+    ['Effective', 'collaborator'],
+    ['Confident', 'leader'],
+    ['Globally &', 'socially aware']
+  ];
 
-    ATTRIBUTES.forEach((attr, idx) => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.dataset.index = idx;
+  /* ── State ─────────────────────────────────────────────── */
 
-      const ratingBtns = LEVELS.map(level => `
-        <label class="rating-btn">
-          <input type="radio" name="attr_${idx}" value="${level.value}" onchange="onAnswer(${idx}, ${level.value})">
-          <span class="pip">${level.value}</span>
-          <span class="lbl">${level.label.replace('\n', '<br>')}</span>
-        </label>
-      `).join('');
+  let historical = [];            // array of number[7], loaded from URL
+  let current    = new Array(7).fill(null);
+  let chart      = null;
 
-      card.innerHTML = `
-        <div class="card-header">
-          <div class="attr-icon" style="background:${attr.bg}; color:${attr.color};">${attr.icon}</div>
-          <div>
-            <div class="card-title">${attr.name}</div>
-            <div class="card-desc">${attr.desc}</div>
-          </div>
-        </div>
-        <p class="card-question">${attr.question}</p>
-        <div class="rating-row">${ratingBtns}</div>
-      `;
+  /* ── URL helpers ───────────────────────────────────────── */
 
-      section.insertBefore(card, submitWrap);
-    });
+  function loadFromUrl() {
+    const p = new URLSearchParams(location.search);
+    const out = [];
+    for (let i = 1; i <= 5; i++) {
+      const v = p.get('v' + i);
+      if (v && /^[1-5]{7}$/.test(v)) {
+        out.push(v.split('').map(Number));
+      } else break;
+    }
+    return out;
   }
 
-  // ── Handle answer selection ───────────────────────
-
-  function onAnswer(idx, value) {
-    answers[idx] = value;
-    const card = document.querySelector(`.card[data-index="${idx}"]`);
-    card.classList.add('answered');
-    updateProgress();
+  function buildUrl(attempts) {
+    const p = new URLSearchParams();
+    attempts.forEach((a, i) => p.set('v' + (i + 1), a.join('')));
+    return location.origin + location.pathname + '?' + p.toString();
   }
 
-  function updateProgress() {
-    const answered = answers.filter(a => a !== null).length;
-    const pct = (answered / ATTRIBUTES.length) * 100;
-    document.getElementById('progressBar').style.width = pct + '%';
-    document.getElementById('progressLabel').textContent = `${answered} of ${ATTRIBUTES.length} answered`;
+  /* ── Chart ─────────────────────────────────────────────── */
 
-    const allDone = answered === ATTRIBUTES.length;
-    document.getElementById('submitBtn').disabled = !allDone;
-    if (allDone) document.getElementById('validationMsg').textContent = '';
+  function makeDataset(attempt, style, dashed) {
+    return {
+      label: style.label,
+      data: attempt,
+      backgroundColor: style.bg,
+      borderColor: style.border,
+      borderWidth: 2.2,
+      borderDash: dashed ? [8, 4] : [],
+      pointBackgroundColor: attempt.map(v => v > 0 ? style.border : 'transparent'),
+      pointBorderColor:     attempt.map(v => v > 0 ? '#fff'       : 'transparent'),
+      pointBorderWidth: 2,
+      pointRadius:          attempt.map(v => v > 0 ? 5 : 0),
+      pointHoverRadius:     attempt.map(v => v > 0 ? 7 : 0),
+      isCurrentAttempt: dashed
+    };
   }
 
-  // ── Show results ──────────────────────────────────
+  function initChart() {
+    if (chart) { chart.destroy(); chart = null; }
 
-  function showResults() {
-    const unanswered = answers.indexOf(null);
-    if (unanswered !== -1) {
-      document.getElementById('validationMsg').textContent =
-        `Please answer all questions before generating your profile.`;
-      document.querySelector(`.card[data-index="${unanswered}"]`).scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
+    const datasets = historical.map((a, i) => makeDataset(a, ATTEMPT_STYLES[i], false));
+
+    if (historical.length < 5) {
+      const cdata = current.map(v => v ?? 0);
+      const hasAny = current.some(v => v !== null);
+      const style = { ...CUR, label: 'In Progress' };
+      const ds = makeDataset(cdata, style, true);
+      if (!hasAny) {
+        ds.borderColor = 'transparent';
+        ds.backgroundColor = 'transparent';
+      }
+      datasets.push(ds);
     }
 
-    document.getElementById('questionnaire').style.display = 'none';
-    const results = document.getElementById('results');
-    results.classList.add('visible');
-    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    buildChart();
-    buildScoreGrid();
-  }
-
-  // ── Radar chart ───────────────────────────────────
-
-  function buildChart() {
-    if (radarChart) { radarChart.destroy(); radarChart = null; }
-
-    const labels = ATTRIBUTES.map(a => a.name);
-    const colors = ATTRIBUTES.map(a => a.color);
-    const data = answers.map(Number);
-
-    const gradientPlugin = {
-      id: 'radarFill',
-      beforeDraw() {}
-    };
-
-    radarChart = new Chart(document.getElementById('radarChart'), {
+    chart = new Chart(document.getElementById('radarChart'), {
       type: 'radar',
-      data: {
-        labels,
-        datasets: [{
-          label: 'Your Profile',
-          data,
-          backgroundColor: 'rgba(28,61,110,0.15)',
-          borderColor: '#1c3d6e',
-          borderWidth: 2.5,
-          pointBackgroundColor: colors,
-          pointBorderColor: '#fff',
-          pointBorderWidth: 2,
-          pointRadius: 6,
-          pointHoverRadius: 8,
-          fill: true
-        }]
-      },
+      data: { labels: CHART_LABELS, datasets },
       options: {
         responsive: true,
         maintainAspectRatio: true,
+        animation: { duration: 280 },
         plugins: {
           legend: { display: false },
           tooltip: {
             callbacks: {
               label: ctx => {
-                const lvl = LEVELS.find(l => l.value === ctx.raw);
-                return ` ${ctx.raw}/5 — ${lvl ? lvl.label.replace('\n', ' ') : ''}`;
+                if (ctx.raw === 0 && ctx.dataset.isCurrentAttempt) return null;
+                const lv = LEVELS.find(l => l.v === ctx.raw);
+                return ` ${ctx.raw}/5${lv ? ' — ' + lv.lbl.replace('\n', ' ') : ''}`;
               }
             }
           }
         },
         scales: {
           r: {
-            min: 0,
-            max: 5,
+            min: 0, max: 5,
             ticks: {
               stepSize: 1,
-              display: true,
               backdropColor: 'transparent',
               color: '#5a6a7e',
-              font: { size: 10 }
+              font: { size: 8 }
             },
             pointLabels: {
               color: '#1a1a2e',
-              font: {
-                size: window.innerWidth < 400 ? 9 : 11,
-                weight: '600'
-              }
+              font: { size: window.innerWidth < 400 ? 8 : 10, weight: '600' }
             },
-            grid: { color: 'rgba(0,0,0,0.08)' },
-            angleLines: { color: 'rgba(0,0,0,0.1)' }
+            grid:        { color: 'rgba(0,0,0,0.06)' },
+            angleLines:  { color: 'rgba(0,0,0,0.08)' }
           }
         }
       }
     });
+
+    refreshLegend();
+    refreshChartEmpty();
   }
 
-  // ── Score grid ────────────────────────────────────
+  function updateCurrentDataset() {
+    if (!chart) return;
+    const ds = chart.data.datasets.find(d => d.isCurrentAttempt);
+    if (!ds) return;
 
-  function buildScoreGrid() {
-    const grid = document.getElementById('scoreGrid');
-    grid.innerHTML = '';
+    const cdata = current.map(v => v ?? 0);
+    const hasAny = current.some(v => v !== null);
+
+    ds.data = cdata;
+    ds.borderColor     = hasAny ? CUR.border : 'transparent';
+    ds.backgroundColor = hasAny ? CUR.bg     : 'transparent';
+    ds.pointBackgroundColor = cdata.map(v => v > 0 ? CUR.border : 'transparent');
+    ds.pointBorderColor     = cdata.map(v => v > 0 ? '#fff'     : 'transparent');
+    ds.pointRadius          = cdata.map(v => v > 0 ? 5 : 0);
+
+    chart.update();
+    refreshChartEmpty();
+    refreshLegend();
+  }
+
+  function refreshLegend() {
+    const el = document.getElementById('chartLegend');
+    if (!chart) { el.innerHTML = ''; return; }
+
+    el.innerHTML = chart.data.datasets.map(ds => {
+      const isDashed = ds.isCurrentAttempt;
+      const col = ds.borderColor;
+      if (col === 'transparent') return '';
+      const swatchStyle = isDashed
+        ? `background: repeating-linear-gradient(90deg,${col} 0,${col} 8px,transparent 8px,transparent 12px); height:3px;`
+        : `background:${col}; height:3px;`;
+      return `<div class="legend-item">
+        <div class="legend-swatch" style="${swatchStyle}"></div>
+        <span>${ds.label}</span>
+      </div>`;
+    }).join('');
+  }
+
+  function refreshChartEmpty() {
+    const hasData = historical.length > 0 || current.some(v => v !== null);
+    document.getElementById('chartEmpty').style.display = hasData ? 'none' : 'flex';
+  }
+
+  function refreshChartSummary() {
+    const el = document.getElementById('chartSummary');
+    if (historical.length === 0) {
+      el.textContent = 'Answer the questions — your chart will update in real time.';
+    } else if (historical.length === 5) {
+      el.textContent = 'All 5 assessments complete. Your full year profile is shown.';
+    } else {
+      el.textContent = `${historical.length} assessment${historical.length > 1 ? 's' : ''} completed. Fill in the next one below.`;
+    }
+  }
+
+  /* ── Questions ─────────────────────────────────────────── */
+
+  function buildQuestions() {
+    const container = document.getElementById('questionnaire');
+    container.innerHTML = '';
 
     ATTRIBUTES.forEach((attr, idx) => {
-      const val  = answers[idx];
-      const lvl  = LEVELS.find(l => l.value === val);
-      const item = document.createElement('div');
-      item.className = 'score-item';
-      item.style.background = attr.bg;
-      item.style.color = attr.color;
-      item.innerHTML = `
-        <div class="score-num">${val}</div>
-        <div class="score-name">${attr.name}</div>
-        <div class="score-level" style="color:${attr.color};">${lvl ? lvl.label.replace('\n', ' ') : ''}</div>
+      const card = document.createElement('div');
+      card.className = 'q-card';
+      card.dataset.idx = idx;
+
+      const btns = LEVELS.map(lv => `
+        <label class="rating-btn">
+          <input type="radio" name="q${idx}" value="${lv.v}" onchange="onAnswer(${idx},${lv.v})">
+          <span class="pip">${lv.v}</span>
+          <span class="pip-lbl">${lv.lbl.replace('\n', '<br>')}</span>
+        </label>
+      `).join('');
+
+      card.innerHTML = `
+        <div class="q-card-header">
+          <div class="q-icon" style="background:${attr.bg}; color:${attr.color};">${attr.icon}</div>
+          <div>
+            <div class="q-title">${attr.name}</div>
+            <div class="q-desc">${attr.desc}</div>
+          </div>
+        </div>
+        <p class="q-question">${attr.question}</p>
+        <div class="rating-row">${btns}</div>
       `;
-      grid.appendChild(item);
+      container.appendChild(card);
     });
   }
 
-  // ── Retake ────────────────────────────────────────
-
-  function retake() {
-    answers.fill(null);
-
-    document.querySelectorAll('.card').forEach(c => c.classList.remove('answered'));
-    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-
-    document.getElementById('results').classList.remove('visible');
-    const q = document.getElementById('questionnaire');
-    q.style.display = '';
-    document.getElementById('submitBtn').disabled = true;
+  function onAnswer(idx, value) {
+    current[idx] = value;
+    document.querySelector(`.q-card[data-idx="${idx}"]`).classList.add('answered');
+    updateCurrentDataset();
     updateProgress();
+  }
+
+  function updateProgress() {
+    const done = current.filter(v => v !== null).length;
+    document.getElementById('progressFill').style.width = (done / 7 * 100) + '%';
+    document.getElementById('progressText').textContent = `${done} of 7 answered`;
+    document.getElementById('submitBtn').disabled = done < 7;
+  }
+
+  function updateBanner(n) {
+    document.getElementById('bannerTitle').textContent = `Assessment ${n} of 5`;
+    document.getElementById('dotsRow').innerHTML = Array.from({ length: 5 }, (_, i) => {
+      const cls = i < n - 1 ? 'done' : i === n - 1 ? 'current' : 'future';
+      return `<div class="dot ${cls}"></div>`;
+    }).join('');
+  }
+
+  /* ── Submit ────────────────────────────────────────────── */
+
+  function handleSubmit() {
+    if (current.includes(null)) {
+      document.getElementById('validationMsg').style.display = 'block';
+      return;
+    }
+    document.getElementById('validationMsg').style.display = 'none';
+
+    historical = [...historical, [...current]];
+    const url = buildUrl(historical);
+    history.replaceState(null, '', url);
+
+    // Rebuild chart: new attempt is now solid, in-progress resets
+    current = new Array(7).fill(null);
+    initChart();
+    refreshChartSummary();
+
+    const n = historical.length;
+
+    document.getElementById('assessmentView').classList.add('hidden');
+    document.getElementById('postSubmission').classList.remove('hidden');
+
+    document.getElementById('successTitle').textContent = `Assessment ${n} saved!`;
+    document.getElementById('bookmarkUrl').textContent = url;
+
+    if (n >= 5) {
+      document.getElementById('successSub').textContent = "You've completed all 5 assessments — amazing progress!";
+      document.getElementById('nextBtnWrap').classList.add('hidden');
+    } else {
+      document.getElementById('successSub').textContent =
+        `Bookmark the URL below, then come back to complete Assessment ${n + 1} later.`;
+      document.getElementById('nextNum').textContent = n + 1;
+    }
+
+    if (n > 1) {
+      document.getElementById('compareSection').classList.remove('hidden');
+      buildCompareGrid();
+    }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ── Init ──────────────────────────────────────────
+  function copyUrl() {
+    navigator.clipboard.writeText(document.getElementById('bookmarkUrl').textContent).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2200);
+    });
+  }
 
-  buildCards();
+  /* ── Start next assessment ─────────────────────────────── */
+
+  function startNext() {
+    current = new Array(7).fill(null);
+
+    document.getElementById('postSubmission').classList.add('hidden');
+    document.getElementById('assessmentView').classList.remove('hidden');
+
+    buildQuestions();
+    updateProgress();
+    updateBanner(historical.length + 1);
+    initChart();
+    refreshChartSummary();
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── Comparison grid ───────────────────────────────────── */
+
+  function buildCompareGrid() {
+    const grid = document.getElementById('compareGrid');
+    grid.innerHTML = '';
+
+    ATTRIBUTES.forEach((attr, ai) => {
+      const row = document.createElement('div');
+      row.className = 'compare-row';
+
+      const pips = historical.map((attempt, hi) => {
+        const v = attempt[ai];
+        const col = ATTEMPT_STYLES[hi].border;
+        return `<div class="bar-pip" style="background:${col}" title="Assessment ${hi+1}: ${v}/5">${v}</div>`;
+      }).join('');
+
+      row.innerHTML = `
+        <span class="compare-attr" title="${attr.name}">${attr.icon} ${attr.name}</span>
+        <div class="compare-bars">${pips}</div>
+      `;
+      grid.appendChild(row);
+    });
+  }
+
+  /* ── Init ──────────────────────────────────────────────── */
+
+  function init() {
+    historical = loadFromUrl();
+    refreshChartSummary();
+    initChart();
+
+    if (historical.length >= 5) {
+      document.getElementById('assessmentView').classList.add('hidden');
+      document.getElementById('allDone').classList.remove('hidden');
+    } else {
+      buildQuestions();
+      updateBanner(historical.length + 1);
+      updateProgress();
+    }
+  }
+
+  init();
 </script>
 </body>
 </html>
