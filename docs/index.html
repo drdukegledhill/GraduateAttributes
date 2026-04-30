@@ -21,6 +21,15 @@
       --shadow:  0 2px 14px rgba(0,0,0,0.08);
     }
 
+    [data-theme="dark"] {
+      --bg:     #111827;
+      --card:   #1f2937;
+      --text:   #f0f4f8;
+      --muted:  #9ca3af;
+      --border: #374151;
+      --shadow: 0 2px 14px rgba(0,0,0,0.35);
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg);
@@ -34,12 +43,26 @@
     header {
       background: var(--primary);
       color: white;
-      padding: 24px 20px 20px;
+      padding: 24px 60px 20px;
       text-align: center;
+      position: relative;
     }
 
     header h1 { font-size: clamp(1.3rem, 4vw, 1.9rem); font-weight: 700; }
     header p  { font-size: 0.88rem; opacity: 0.8; margin-top: 6px; max-width: 520px; margin-inline: auto; line-height: 1.5; }
+
+    .theme-toggle {
+      position: absolute;
+      top: 50%; right: 16px;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.15);
+      border: none; border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 1.1rem; line-height: 1;
+      transition: background 0.18s;
+    }
+    .theme-toggle:hover { background: rgba(255,255,255,0.28); }
 
     /* ── Two-column layout ───────────────────────────── */
 
@@ -404,6 +427,34 @@
     .done-card h2      { color: var(--primary); font-size: 1.2rem; margin-bottom: 8px; }
     .done-card p       { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
 
+    /* ── Mode switcher ───────────────────────────────── */
+
+    .mode-switch {
+      display: flex;
+      background: var(--border);
+      border-radius: 100px;
+      padding: 3px;
+      gap: 2px;
+      margin-bottom: 14px;
+    }
+
+    .mode-btn {
+      flex: 1;
+      border: none; border-radius: 100px;
+      padding: 9px 0;
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
+      background: var(--card);
+      color: var(--primary);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    }
+
     /* ── Utility ─────────────────────────────────────── */
     .hidden { display: none !important; }
 
@@ -419,6 +470,7 @@
 <header>
   <h1>Graduate Attributes</h1>
   <p>Complete up to 5 self-assessments across the year and watch your profile develop.</p>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☀️</button>
 </header>
 
 <main>
@@ -440,6 +492,14 @@
     <!-- ── Right: questions / results ────────────── -->
     <div class="questions-panel" id="questionsPanel">
 
+      <!-- Mode switcher (shown after 2+ assessments) -->
+      <div id="modeSwitcherWrap" class="hidden">
+        <div class="mode-switch">
+          <button class="mode-btn active" id="modeAssessmentBtn" onclick="switchMode('assessment')">Assessment</button>
+          <button class="mode-btn"        id="modeProgressBtn"   onclick="switchMode('progress')">Progress</button>
+        </div>
+      </div>
+
       <!-- Active assessment -->
       <div id="assessmentView">
         <div class="assessment-banner" id="assessmentBanner">
@@ -448,10 +508,6 @@
             <p>Rate yourself honestly — there are no right or wrong answers.</p>
           </div>
           <div class="dots-row" id="dotsRow"></div>
-        </div>
-
-        <div id="viewProgressWrap" class="hidden" style="text-align:right; margin: -4px 0 10px;">
-          <button class="btn btn-outline" style="padding:6px 16px; font-size:0.8rem;" onclick="showProgress()">View progress</button>
         </div>
 
         <div id="questionnaire"></div>
@@ -473,9 +529,6 @@
       <!-- Post-submission -->
       <div id="postSubmission" class="hidden">
         <div class="success-card">
-          <div id="backToFormWrap" class="hidden" style="text-align:left; margin-bottom:14px;">
-            <button class="btn btn-outline" style="padding:6px 16px; font-size:0.8rem;" onclick="backToAssessment()">← Back to assessment</button>
-          </div>
           <div class="success-icon" id="successIcon">🎉</div>
           <h2 id="successTitle">Assessment 1 saved!</h2>
           <p class="sub" id="successSub">Bookmark the URL below to return and complete your next assessment later.</p>
@@ -602,6 +655,23 @@
   let chart          = null;
   let progressChart  = null;
 
+  /* ── Theme helpers ─────────────────────────────────────── */
+
+  function isDark()  { return document.documentElement.dataset.theme === 'dark'; }
+  function cMuted()  { return isDark() ? '#9ca3af' : '#5a6a7e'; }
+  function cText()   { return isDark() ? '#f0f4f8' : '#1a1a2e'; }
+  function cGrid()   { return isDark() ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'; }
+  function cAngle()  { return isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'; }
+
+  function toggleTheme() {
+    const dark = isDark();
+    document.documentElement.dataset.theme = dark ? '' : 'dark';
+    document.getElementById('themeToggle').textContent = dark ? '☀️' : '🌙';
+    localStorage.setItem('theme', dark ? 'light' : 'dark');
+    initChart();
+    if (progressChart) buildProgressChart();
+  }
+
   /* ── URL helpers ───────────────────────────────────────── */
 
   function loadFromUrl() {
@@ -683,15 +753,15 @@
             ticks: {
               stepSize: 1,
               backdropColor: 'transparent',
-              color: '#5a6a7e',
+              color: cMuted(),
               font: { size: 8 }
             },
             pointLabels: {
-              color: '#1a1a2e',
+              color: cText(),
               font: { size: window.innerWidth < 400 ? 8 : 10, weight: '600' }
             },
-            grid:        { color: 'rgba(0,0,0,0.06)' },
-            angleLines:  { color: 'rgba(0,0,0,0.08)' }
+            grid:        { color: cGrid() },
+            angleLines:  { color: cAngle() }
           }
         }
       }
@@ -833,8 +903,8 @@
 
     document.getElementById('assessmentView').classList.add('hidden');
     document.getElementById('postSubmission').classList.remove('hidden');
-    document.getElementById('backToFormWrap').classList.add('hidden');
     document.getElementById('successIcon').textContent = '🎉';
+    updateModeSwitcher('progress');
 
     document.getElementById('successTitle').textContent = `Assessment ${n} saved!`;
     document.getElementById('bookmarkUrl').textContent = url;
@@ -878,46 +948,43 @@
     buildQuestions();
     updateProgress();
     updateBanner(historical.length + 1);
-    updateViewProgressBtn();
+    updateModeSwitcher('assessment');
     initChart();
     refreshChartSummary();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  /* ── View progress (without submitting) ───────────────── */
+  /* ── Mode switcher ─────────────────────────────────────── */
 
-  function updateViewProgressBtn() {
-    document.getElementById('viewProgressWrap').classList.toggle('hidden', historical.length < 2);
+  function updateModeSwitcher(activeMode) {
+    const show = historical.length >= 2;
+    document.getElementById('modeSwitcherWrap').classList.toggle('hidden', !show);
+    document.getElementById('modeAssessmentBtn').classList.toggle('active', activeMode !== 'progress');
+    document.getElementById('modeProgressBtn').classList.toggle('active', activeMode === 'progress');
   }
 
-  function showProgress() {
-    const n = historical.length;
-    document.getElementById('assessmentView').classList.add('hidden');
-    document.getElementById('postSubmission').classList.remove('hidden');
-    document.getElementById('backToFormWrap').classList.remove('hidden');
-    document.getElementById('successIcon').textContent = '📊';
-    document.getElementById('successTitle').textContent = 'Your progress';
-    document.getElementById('successSub').textContent =
-      `${n} assessment${n > 1 ? 's' : ''} completed. Bookmark your URL to return anytime.`;
-    document.getElementById('bookmarkUrl').textContent = buildUrl(historical);
-    document.getElementById('nextNum').textContent = n + 1;
-    if (n >= 5) {
-      document.getElementById('nextBtnWrap').classList.add('hidden');
-    } else {
-      document.getElementById('nextBtnWrap').classList.remove('hidden');
+  function switchMode(mode) {
+    const isProgress = mode === 'progress';
+    document.getElementById('assessmentView').classList.toggle('hidden', isProgress);
+    document.getElementById('postSubmission').classList.toggle('hidden', !isProgress);
+    updateModeSwitcher(mode);
+
+    if (isProgress) {
+      const n = historical.length;
+      document.getElementById('successIcon').textContent = '📊';
+      document.getElementById('successTitle').textContent = 'Your progress';
+      document.getElementById('successSub').textContent =
+        `${n} assessment${n > 1 ? 's' : ''} completed. Bookmark your URL to return anytime.`;
+      document.getElementById('bookmarkUrl').textContent = buildUrl(historical);
+      document.getElementById('nextNum').textContent = n + 1;
+      document.getElementById('nextBtnWrap').classList.toggle('hidden', n >= 5);
+      document.getElementById('compareSection').classList.remove('hidden');
+      buildCompareGrid();
+      document.getElementById('progressChartSection').classList.remove('hidden');
+      buildProgressChart();
     }
-    document.getElementById('compareSection').classList.remove('hidden');
-    buildCompareGrid();
-    document.getElementById('progressChartSection').classList.remove('hidden');
-    buildProgressChart();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
 
-  function backToAssessment() {
-    document.getElementById('postSubmission').classList.add('hidden');
-    document.getElementById('backToFormWrap').classList.add('hidden');
-    document.getElementById('assessmentView').classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -969,11 +1036,11 @@
         scales: {
           y: {
             min: 1, max: 5,
-            ticks: { stepSize: 1, color: '#5a6a7e', font: { size: 10 } },
-            grid:  { color: 'rgba(0,0,0,0.06)' }
+            ticks: { stepSize: 1, color: cMuted(), font: { size: 10 } },
+            grid:  { color: cGrid() }
           },
           x: {
-            ticks: { color: '#5a6a7e', font: { size: 10 } },
+            ticks: { color: cMuted(), font: { size: 10 } },
             grid:  { display: false }
           }
         }
@@ -1008,6 +1075,12 @@
   /* ── Init ──────────────────────────────────────────────── */
 
   function init() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.dataset.theme = 'dark';
+      document.getElementById('themeToggle').textContent = '🌙';
+    }
+
     historical = loadFromUrl();
     refreshChartSummary();
     initChart();
@@ -1015,11 +1088,12 @@
     if (historical.length >= 5) {
       document.getElementById('assessmentView').classList.add('hidden');
       document.getElementById('allDone').classList.remove('hidden');
+      updateModeSwitcher('assessment');
     } else {
       buildQuestions();
       updateBanner(historical.length + 1);
       updateProgress();
-      updateViewProgressBtn();
+      updateModeSwitcher('assessment');
     }
   }
 
