@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graduate Attributes — Self-Assessment</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1c3d6e;
+      --accent: #e05c2a;
+      --accent2: #2a9d8f;
+      --bg: #f0f4f8;
+      --card: #ffffff;
+      --text: #1a1a2e;
+      --muted: #5a6a7e;
+      --border: #d0d9e4;
+      --radius: 12px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 32px 24px 28px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    header p {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      opacity: 0.82;
+      max-width: 520px;
+      margin-inline: auto;
+      line-height: 1.5;
+    }
+
+    .progress-bar-wrap {
+      background: rgba(255,255,255,0.15);
+      border-radius: 100px;
+      height: 6px;
+      width: min(300px, 80vw);
+      margin: 18px auto 0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: var(--accent);
+      height: 100%;
+      border-radius: 100px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    .progress-label {
+      font-size: 0.78rem;
+      opacity: 0.7;
+      margin-top: 6px;
+      text-align: center;
+    }
+
+    main {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* ── Question cards ─────────────────────────────── */
+
+    #questionnaire { padding-top: 28px; }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 20px 20px;
+      margin-bottom: 16px;
+      border: 1.5px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .card.answered { border-color: var(--accent2); }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .attr-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .card-title { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .card-desc  { font-size: 0.82rem; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+    .card-question { font-size: 0.9rem; color: var(--text); margin-bottom: 14px; line-height: 1.5; }
+
+    /* Rating row */
+    .rating-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+    }
+
+    .rating-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .rating-btn input[type="radio"] { display: none; }
+
+    .rating-btn .pip {
+      width: 100%;
+      aspect-ratio: 1;
+      max-width: 52px;
+      border-radius: 10px;
+      border: 2px solid var(--border);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--muted);
+      transition: all 0.15s ease;
+      user-select: none;
+      margin: 0 auto;
+    }
+
+    .rating-btn .lbl {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .rating-btn input:checked + .pip {
+      border-color: transparent;
+      color: white;
+      transform: scale(1.08);
+    }
+
+    .rating-btn:hover .pip {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* coloured selected states per attribute */
+    .card[data-index="0"] .rating-btn input:checked + .pip { background: #e84393; }
+    .card[data-index="1"] .rating-btn input:checked + .pip { background: #e05c2a; }
+    .card[data-index="2"] .rating-btn input:checked + .pip { background: #f4a261; color: #333; }
+    .card[data-index="3"] .rating-btn input:checked + .pip { background: #2a9d8f; }
+    .card[data-index="4"] .rating-btn input:checked + .pip { background: #457b9d; }
+    .card[data-index="5"] .rating-btn input:checked + .pip { background: #6a4c93; }
+    .card[data-index="6"] .rating-btn input:checked + .pip { background: #1c7c54; }
+
+    /* Submit */
+    .submit-wrap {
+      text-align: center;
+      padding: 8px 0 4px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 100px;
+      padding: 14px 36px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-primary:hover   { background: #24508f; }
+    .btn-primary:active  { transform: scale(0.97); }
+    .btn-primary:disabled {
+      background: var(--border);
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    .validation-msg {
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-top: 10px;
+    }
+
+    /* ── Results ────────────────────────────────────── */
+
+    #results {
+      display: none;
+      padding-top: 28px;
+    }
+
+    #results.visible { display: block; }
+
+    .results-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px 20px;
+      margin-bottom: 16px;
+    }
+
+    .results-card h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--primary);
+    }
+
+    .results-card .subtitle {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      aspect-ratio: 1;
+    }
+
+    /* Score summary grid */
+    .score-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    @media (min-width: 480px) {
+      .score-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .score-item {
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+
+    .score-item .score-num {
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .score-item .score-name {
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    .score-item .score-level {
+      font-size: 0.68rem;
+      opacity: 0.7;
+      margin-top: 2px;
+    }
+
+    /* Retake */
+    .retake-wrap {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: 100px;
+      padding: 11px 28px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* ── Responsive tweaks ──────────────────────────── */
+
+    @media (max-width: 400px) {
+      .rating-btn .lbl { display: none; }
+      .rating-row { gap: 5px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Graduate Attributes</h1>
+  <p>Rate yourself honestly on each attribute. There are no right or wrong answers — this is about understanding where you are right now.</p>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <p class="progress-label" id="progressLabel">0 of 7 answered</p>
+</header>
+
+<main>
+
+  <!-- Questionnaire -->
+  <section id="questionnaire">
+
+    <!-- Cards injected by JS -->
+
+    <div class="submit-wrap" id="submitWrap">
+      <button class="btn-primary" id="submitBtn" disabled onclick="showResults()">
+        Generate My Profile
+      </button>
+      <p class="validation-msg" id="validationMsg"></p>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section id="results">
+    <div class="results-card">
+      <h2>Your Graduate Attributes Profile</h2>
+      <p class="subtitle">Here's how you see yourself right now. Use this as a starting point for your development journey.</p>
+      <div class="chart-wrap">
+        <canvas id="radarChart"></canvas>
+      </div>
+    </div>
+
+    <div class="results-card">
+      <h2>Score Breakdown</h2>
+      <p class="subtitle">Your self-assessed level for each attribute (1 = Just Starting, 5 = Excelling)</p>
+      <div class="score-grid" id="scoreGrid"></div>
+    </div>
+
+    <div class="retake-wrap">
+      <button class="btn-outline" onclick="retake()">Retake Assessment</button>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const ATTRIBUTES = [
+    {
+      name: "Self-motivated",
+      icon: "🎯",
+      color: "#e84393",
+      bg: "#fde8f4",
+      desc: "You have the ability to do what needs to be done without being prompted by others.",
+      question: "How well do you drive your own work and development without needing others to push you?"
+    },
+    {
+      name: "Commercially aware",
+      icon: "🌐",
+      color: "#e05c2a",
+      bg: "#fdeee8",
+      desc: "You understand the wider environment in which an organisation operates.",
+      question: "How confident are you in understanding the pressures and opportunities facing organisations today?"
+    },
+    {
+      name: "Enterprising",
+      icon: "💡",
+      color: "#f4a261",
+      bg: "#fef5ec",
+      desc: "You are able to adapt your thinking and behaviour to suit changing circumstances.",
+      question: "How well do you adapt your thinking and approach when situations change or new opportunities arise?"
+    },
+    {
+      name: "Resilient",
+      icon: "🏋️",
+      color: "#2a9d8f",
+      bg: "#e8f6f5",
+      desc: "You are driven, resolute and determined and able to deal positively with challenges.",
+      question: "How effectively do you deal with setbacks, pressure, and difficult challenges?"
+    },
+    {
+      name: "Effective collaborator",
+      icon: "🤝",
+      color: "#457b9d",
+      bg: "#eaf2f8",
+      desc: "You work well with others and have effective interpersonal skills.",
+      question: "How well do you work within teams and build productive, positive relationships with others?"
+    },
+    {
+      name: "Confident leader",
+      icon: "🚀",
+      color: "#6a4c93",
+      bg: "#f2edf9",
+      desc: "You are able to enthuse a group and motivate them to work towards an identified goal.",
+      question: "How confident are you in stepping up to lead, motivate, and guide others towards a shared goal?"
+    },
+    {
+      name: "Globally & socially aware",
+      icon: "🌍",
+      color: "#1c7c54",
+      bg: "#e8f5ef",
+      desc: "You welcome new ways of thinking and can anticipate the impact of external situations.",
+      question: "How open are you to diverse perspectives, and how aware are you of global and social issues?"
+    }
+  ];
+
+  const LEVELS = [
+    { value: 1, label: "Just\nStarting" },
+    { value: 2, label: "Developing" },
+    { value: 3, label: "Progressing" },
+    { value: 4, label: "Confident" },
+    { value: 5, label: "Excelling" }
+  ];
+
+  const answers = new Array(ATTRIBUTES.length).fill(null);
+  let radarChart = null;
+
+  // ── Build question cards ──────────────────────────
+
+  function buildCards() {
+    const section = document.getElementById('questionnaire');
+    const submitWrap = document.getElementById('submitWrap');
+
+    ATTRIBUTES.forEach((attr, idx) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.index = idx;
+
+      const ratingBtns = LEVELS.map(level => `
+        <label class="rating-btn">
+          <input type="radio" name="attr_${idx}" value="${level.value}" onchange="onAnswer(${idx}, ${level.value})">
+          <span class="pip">${level.value}</span>
+          <span class="lbl">${level.label.replace('\n', '<br>')}</span>
+        </label>
+      `).join('');
+
+      card.innerHTML = `
+        <div class="card-header">
+          <div class="attr-icon" style="background:${attr.bg}; color:${attr.color};">${attr.icon}</div>
+          <div>
+            <div class="card-title">${attr.name}</div>
+            <div class="card-desc">${attr.desc}</div>
+          </div>
+        </div>
+        <p class="card-question">${attr.question}</p>
+        <div class="rating-row">${ratingBtns}</div>
+      `;
+
+      section.insertBefore(card, submitWrap);
+    });
+  }
+
+  // ── Handle answer selection ───────────────────────
+
+  function onAnswer(idx, value) {
+    answers[idx] = value;
+    const card = document.querySelector(`.card[data-index="${idx}"]`);
+    card.classList.add('answered');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const answered = answers.filter(a => a !== null).length;
+    const pct = (answered / ATTRIBUTES.length) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = `${answered} of ${ATTRIBUTES.length} answered`;
+
+    const allDone = answered === ATTRIBUTES.length;
+    document.getElementById('submitBtn').disabled = !allDone;
+    if (allDone) document.getElementById('validationMsg').textContent = '';
+  }
+
+  // ── Show results ──────────────────────────────────
+
+  function showResults() {
+    const unanswered = answers.indexOf(null);
+    if (unanswered !== -1) {
+      document.getElementById('validationMsg').textContent =
+        `Please answer all questions before generating your profile.`;
+      document.querySelector(`.card[data-index="${unanswered}"]`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    document.getElementById('questionnaire').style.display = 'none';
+    const results = document.getElementById('results');
+    results.classList.add('visible');
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    buildChart();
+    buildScoreGrid();
+  }
+
+  // ── Radar chart ───────────────────────────────────
+
+  function buildChart() {
+    if (radarChart) { radarChart.destroy(); radarChart = null; }
+
+    const labels = ATTRIBUTES.map(a => a.name);
+    const colors = ATTRIBUTES.map(a => a.color);
+    const data = answers.map(Number);
+
+    const gradientPlugin = {
+      id: 'radarFill',
+      beforeDraw() {}
+    };
+
+    radarChart = new Chart(document.getElementById('radarChart'), {
+      type: 'radar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Your Profile',
+          data,
+          backgroundColor: 'rgba(28,61,110,0.15)',
+          borderColor: '#1c3d6e',
+          borderWidth: 2.5,
+          pointBackgroundColor: colors,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 6,
+          pointHoverRadius: 8,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => {
+                const lvl = LEVELS.find(l => l.value === ctx.raw);
+                return ` ${ctx.raw}/5 — ${lvl ? lvl.label.replace('\n', ' ') : ''}`;
+              }
+            }
+          }
+        },
+        scales: {
+          r: {
+            min: 0,
+            max: 5,
+            ticks: {
+              stepSize: 1,
+              display: true,
+              backdropColor: 'transparent',
+              color: '#5a6a7e',
+              font: { size: 10 }
+            },
+            pointLabels: {
+              color: '#1a1a2e',
+              font: {
+                size: window.innerWidth < 400 ? 9 : 11,
+                weight: '600'
+              }
+            },
+            grid: { color: 'rgba(0,0,0,0.08)' },
+            angleLines: { color: 'rgba(0,0,0,0.1)' }
+          }
+        }
+      }
+    });
+  }
+
+  // ── Score grid ────────────────────────────────────
+
+  function buildScoreGrid() {
+    const grid = document.getElementById('scoreGrid');
+    grid.innerHTML = '';
+
+    ATTRIBUTES.forEach((attr, idx) => {
+      const val  = answers[idx];
+      const lvl  = LEVELS.find(l => l.value === val);
+      const item = document.createElement('div');
+      item.className = 'score-item';
+      item.style.background = attr.bg;
+      item.style.color = attr.color;
+      item.innerHTML = `
+        <div class="score-num">${val}</div>
+        <div class="score-name">${attr.name}</div>
+        <div class="score-level" style="color:${attr.color};">${lvl ? lvl.label.replace('\n', ' ') : ''}</div>
+      `;
+      grid.appendChild(item);
+    });
+  }
+
+  // ── Retake ────────────────────────────────────────
+
+  function retake() {
+    answers.fill(null);
+
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('answered'));
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+
+    document.getElementById('results').classList.remove('visible');
+    const q = document.getElementById('questionnaire');
+    q.style.display = '';
+    document.getElementById('submitBtn').disabled = true;
+    updateProgress();
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Init ──────────────────────────────────────────
+
+  buildCards();
+</script>
+</body>
+</html>
