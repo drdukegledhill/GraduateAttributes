@@ -20,7 +20,14 @@ A lightweight, single-page web tool for students to self-assess their developmen
 
 Students visit the page and rate themselves 1–5 on each attribute. The radar/spider chart updates in real time as they answer. On saving, the browser URL updates to encode their scores — they bookmark it and return later for subsequent assessments.
 
-Up to **5 assessments** can be completed across the academic year. Each new assessment adds another layer to the chart, making development over time visible at a glance.
+Up to **5 assessments** can be completed across the academic year. Each new assessment adds another layer to the radar chart, making development over time visible at a glance.
+
+After the second assessment, the summary screen also shows:
+
+- **Score trends** — a line chart tracing each attribute across all completed assessments, with a colour-coded legend
+- **Progress so far** — a side-by-side score grid for quick comparison
+
+Returning students with two or more assessments on record can tap **View progress** at the top of the form to jump straight to the summary without completing a new submission.
 
 ### URL format
 
