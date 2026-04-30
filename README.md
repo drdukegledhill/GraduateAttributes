@@ -27,7 +27,7 @@ Once two assessments are saved, an **Assessment / Progress** tab switcher appear
 - **Score trends** — a line chart tracing each attribute across all completed assessments, with a colour-coded legend
 - **Progress so far** — a side-by-side score grid for quick comparison
 
-Switching back to the Assessment tab always presents a clean form for the next round. A **dark/light mode** toggle (☀️/🌙) in the header switches themes, with the preference saved in the browser.
+Switching back to the Assessment tab always presents a clean form for the next round. A **dark/light mode** toggle (☀️/🌙) in the header switches themes, with the preference saved in the browser. A **Reset all data** button in the footer clears the URL and returns the tool to its initial state.
 
 ### URL format
 
