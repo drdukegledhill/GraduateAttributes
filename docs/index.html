@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Graduate Attributes Self-Assessment</title>
+  <title>Graduate Attributes Check-in</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -573,7 +573,7 @@
 
 <header>
   <h1>Graduate Attributes</h1>
-  <p>Complete up to 5 self-assessments across the year and watch your profile develop.</p>
+  <p>Complete up to 5 check-ins across the year and watch your profile develop.</p>
   <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☀️</button>
 </header>
 
@@ -599,7 +599,7 @@
       <!-- Mode switcher (shown after 2+ assessments) -->
       <div id="modeSwitcherWrap" class="hidden">
         <div class="mode-switch">
-          <button class="mode-btn active" id="modeAssessmentBtn" onclick="switchMode('assessment')">Assessment</button>
+          <button class="mode-btn active" id="modeAssessmentBtn" onclick="switchMode('checkin')">Check-in</button>
           <button class="mode-btn"        id="modeProgressBtn"   onclick="switchMode('progress')">Progress</button>
         </div>
       </div>
@@ -608,7 +608,7 @@
       <div id="assessmentView">
         <div class="assessment-banner" id="assessmentBanner">
           <div>
-            <h3 id="bannerTitle">Assessment 1 of 5</h3>
+            <h3 id="bannerTitle">Check-in 1 of 5</h3>
             <p>Rate yourself honestly. There are no right or wrong answers.</p>
           </div>
           <div class="dots-row" id="dotsRow"></div>
@@ -624,7 +624,7 @@
             <div class="progress-fill" id="progressFill"></div>
           </div>
           <div class="submit-row">
-            <button class="btn btn-primary" id="submitBtn" disabled onclick="handleSubmit()">Save Assessment</button>
+            <button class="btn btn-primary" id="submitBtn" disabled onclick="handleSubmit()">Save Check-in</button>
             <p class="validation-msg" id="validationMsg">Please answer all 7 questions first.</p>
           </div>
         </div>
@@ -634,8 +634,8 @@
       <div id="postSubmission" class="hidden">
         <div class="success-card">
           <div class="success-icon" id="successIcon">🎉</div>
-          <h2 id="successTitle">Assessment 1 saved!</h2>
-          <p class="sub" id="successSub">Bookmark the URL below to return and complete your next assessment later.</p>
+          <h2 id="successTitle">Check-in 1 saved!</h2>
+          <p class="sub" id="successSub">Bookmark the URL below to save your progress.</p>
 
           <div class="url-box">
             <span class="url-text" id="bookmarkUrl"></span>
@@ -644,7 +644,7 @@
 
           <div class="next-btn-wrap" id="nextBtnWrap">
             <button class="btn btn-primary" onclick="startNext()">
-              Start Assessment <span id="nextNum">2</span>
+              Start Check-in <span id="nextNum">2</span>
             </button>
           </div>
 
@@ -671,8 +671,8 @@
       <div id="allDone" class="hidden">
         <div class="done-card">
           <div class="icon">🏆</div>
-          <h2>All assessments complete</h2>
-          <p>You've completed all 5 assessments. Your full year profile is shown in the chart.</p>
+          <h2>All check-ins complete</h2>
+          <p>You've completed all 5 check-ins. Your full year profile is shown in the chart.</p>
         </div>
       </div>
 
@@ -817,11 +817,11 @@
 
   /* Each historical attempt gets a distinct solid colour */
   const ATTEMPT_STYLES = [
-    { border: '#8ecae6', bg: 'rgba(142,202,230,0.10)', label: 'Assessment 1' },
-    { border: '#219ebc', bg: 'rgba(33,158,188,0.10)',  label: 'Assessment 2' },
-    { border: '#2a9d8f', bg: 'rgba(42,157,143,0.10)',  label: 'Assessment 3' },
-    { border: '#6a4c93', bg: 'rgba(106,76,147,0.12)',  label: 'Assessment 4' },
-    { border: '#1c3d6e', bg: 'rgba(28,61,110,0.14)',   label: 'Assessment 5' }
+    { border: '#8ecae6', bg: 'rgba(142,202,230,0.10)', label: 'Check-in 1' },
+    { border: '#219ebc', bg: 'rgba(33,158,188,0.10)',  label: 'Check-in 2' },
+    { border: '#2a9d8f', bg: 'rgba(42,157,143,0.10)',  label: 'Check-in 3' },
+    { border: '#6a4c93', bg: 'rgba(106,76,147,0.12)',  label: 'Check-in 4' },
+    { border: '#1c3d6e', bg: 'rgba(28,61,110,0.14)',   label: 'Check-in 5' }
   ];
 
   /* Current in-progress: orange dashed */
@@ -1009,9 +1009,9 @@
     if (historical.length === 0) {
       el.textContent = 'Answer the questions and your chart will update in real time.';
     } else if (historical.length === 5) {
-      el.textContent = 'All 5 assessments complete. Your full year profile is shown.';
+      el.textContent = 'All 5 check-ins complete. Your full year profile is shown.';
     } else {
-      el.textContent = `${historical.length} assessment${historical.length > 1 ? 's' : ''} completed. Fill in the next one below.`;
+      el.textContent = `${historical.length} check-in${historical.length > 1 ? 's' : ''} completed. Fill in the next one below.`;
     }
   }
 
@@ -1064,7 +1064,7 @@
   }
 
   function updateBanner(n) {
-    document.getElementById('bannerTitle').textContent = `Assessment ${n} of 5`;
+    document.getElementById('bannerTitle').textContent = `Check-in ${n} of 5`;
     document.getElementById('dotsRow').innerHTML = Array.from({ length: 5 }, (_, i) => {
       const cls = i < n - 1 ? 'done' : i === n - 1 ? 'current' : 'future';
       return `<div class="dot ${cls}"></div>`;
@@ -1096,11 +1096,11 @@
     document.getElementById('successIcon').textContent = '🎉';
     updateModeSwitcher('progress');
 
-    document.getElementById('successTitle').textContent = `Assessment ${n} saved!`;
+    document.getElementById('successTitle').textContent = `Check-in ${n} saved!`;
     document.getElementById('bookmarkUrl').textContent = url;
 
     if (n >= 5) {
-      document.getElementById('successSub').textContent = "You've completed all 5 assessments. Amazing progress!";
+      document.getElementById('successSub').textContent = "You've completed all 5 check-ins. Amazing progress!";
       document.getElementById('nextBtnWrap').classList.add('hidden');
     } else {
       document.getElementById('successSub').textContent =
@@ -1139,7 +1139,7 @@
     buildQuestions();
     updateProgress();
     updateBanner(historical.length + 1);
-    updateModeSwitcher('assessment');
+    updateModeSwitcher('checkin');
     initChart();
     refreshChartSummary();
 
@@ -1166,7 +1166,7 @@
       document.getElementById('successIcon').textContent = '📊';
       document.getElementById('successTitle').textContent = 'Your progress';
       document.getElementById('successSub').textContent =
-        `${n} assessment${n > 1 ? 's' : ''} completed. Bookmark your URL to return anytime.`;
+        `${n} check-in${n > 1 ? 's' : ''} completed. Bookmark your URL to return anytime.`;
       document.getElementById('bookmarkUrl').textContent = buildUrl(historical);
       document.getElementById('nextBtnWrap').classList.add('hidden');
       document.getElementById('compareSection').classList.remove('hidden');
@@ -1190,7 +1190,7 @@
   function buildProgressChart() {
     if (progressChart) { progressChart.destroy(); progressChart = null; }
 
-    const labels   = historical.map((_, i) => `Assessment ${i + 1}`);
+    const labels   = historical.map((_, i) => `Check-in ${i + 1}`);
     const datasets = ATTRIBUTES.map((attr, i) => ({
       label:              attr.name,
       data:               historical.map(attempt => attempt[i]),
@@ -1258,7 +1258,7 @@
       const pips = historical.map((attempt, hi) => {
         const v = attempt[ai];
         const col = ATTEMPT_STYLES[hi].border;
-        return `<div class="bar-pip" style="background:${col}" title="Assessment ${hi+1}: ${v}/5">${v}</div>`;
+        return `<div class="bar-pip" style="background:${col}" title="Check-in ${hi+1}: ${v}/5">${v}</div>`;
       }).join('');
 
       row.innerHTML = `
@@ -1272,7 +1272,7 @@
   /* ── Reset ─────────────────────────────────────────────── */
 
   function resetAll() {
-    if (!confirm('This will clear all your assessment data and cannot be undone. Continue?')) return;
+    if (!confirm('This will clear all your check-in data and cannot be undone. Continue?')) return;
     history.replaceState(null, '', location.pathname);
     historical = [];
     current    = new Array(7).fill(null);
@@ -1284,7 +1284,7 @@
     buildQuestions();
     updateBanner(1);
     updateProgress();
-    updateModeSwitcher('assessment');
+    updateModeSwitcher('checkin');
     initChart();
     refreshChartSummary();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1331,12 +1331,12 @@
     if (historical.length >= 5) {
       document.getElementById('assessmentView').classList.add('hidden');
       document.getElementById('allDone').classList.remove('hidden');
-      updateModeSwitcher('assessment');
+      updateModeSwitcher('checkin');
     } else {
       buildQuestions();
       updateBanner(historical.length + 1);
       updateProgress();
-      updateModeSwitcher('assessment');
+      updateModeSwitcher('checkin');
     }
   }
 

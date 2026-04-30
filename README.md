@@ -1,8 +1,8 @@
-# Graduate Attributes Self-Assessment
+# Graduate Attributes Check-in
 
 **Live tool: https://drdukegledhill.github.io/GraduateAttributes/**
 
-A lightweight, single-page web tool for students to self-assess their development across the University of Huddersfield's seven Graduate Attributes. No accounts, no server, no data storage. Progress is encoded directly in a bookmarkable URL.
+A lightweight, single-page web tool for students to check in on their development across the University of Huddersfield's seven Graduate Attributes. No accounts, no server, no data storage. Progress is encoded directly in a bookmarkable URL.
 
 ## Graduate Attributes
 
@@ -94,22 +94,22 @@ In practice: seeking out viewpoints that differ from your own, staying curious a
 
 ## How it works
 
-Students visit the page and rate themselves 1–5 on each attribute. The radar/spider chart updates in real time as they answer. On saving, the browser URL updates to encode their scores; they can bookmark it and return later for subsequent assessments.
+Students visit the page and rate themselves 1–5 on each attribute. The radar/spider chart updates in real time as they answer. On saving, the browser URL updates to encode their scores; they can bookmark it and return later for subsequent check-ins.
 
-Up to **5 assessments** can be completed across the academic year. Each new assessment adds another layer to the radar chart, making development over time visible at a glance.
+Up to **5 check-ins** can be completed across the academic year. Each new check-in adds another layer to the radar chart, making development over time visible at a glance.
 
-Once two assessments are saved, an **Assessment / Progress** tab switcher appears at the top of the page. The Progress tab shows:
+Once two check-ins are saved, a **Check-in / Progress** tab switcher appears at the top of the page. The Progress tab shows:
 
-- **Score trends**: a line chart tracing each attribute across all completed assessments, with a colour-coded legend
+- **Score trends**: a line chart tracing each attribute across all completed check-ins, with a colour-coded legend
 - **Progress so far**: a side-by-side score grid for quick comparison
 
-Switching back to the Assessment tab always presents a clean form for the next round. A **dark/light mode** toggle (☀️/🌙) in the header switches themes, with the preference saved in the browser. A **Reset all data** button in the footer clears the URL and returns the tool to its initial state.
+Switching back to the Check-in tab always presents a clean form for the next round. A **dark/light mode** toggle (☀️/🌙) in the header switches themes, with the preference saved in the browser. A **Reset all data** button in the footer clears the URL and returns the tool to its initial state.
 
-Each attribute card on the assessment page has an **ⓘ button** that opens a popup with a fuller explanation of that attribute, useful for students who want to understand what they are rating themselves on before answering.
+Each attribute card on the check-in page has an **ⓘ button** that opens a popup with a fuller explanation of that attribute, useful for students who want to understand what they are rating themselves on before answering.
 
 ### URL format
 
-Each assessment is stored as a 7-digit string (one digit per attribute, 1–5):
+Each check-in is stored as a 7-digit string (one digit per attribute, 1–5):
 
 ```
 index.html?v1=3452341
