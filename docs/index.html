@@ -701,7 +701,7 @@
 </main>
 
 <footer>
-  <p>© <a class="reset-btn" href="https://drduke.uk" target="_blank" rel="noopener noreferrer">Dr Duke Gledhill</a> &nbsp;·&nbsp; <button class="reset-btn" onclick="resetAll()">Reset all data</button></p>
+  <p><a class="reset-btn" href="https://drduke.uk" target="_blank" rel="noopener">&copy; <span class="js-year">2026</span> Dr Duke Gledhill</a> &nbsp;·&nbsp; <button class="reset-btn" onclick="resetAll()">Reset all data</button></p>
 </footer>
 
 <!-- Attribute info modal -->
@@ -1362,5 +1362,6 @@
 
   init();
 </script>
+<script>document.querySelectorAll(".js-year").forEach(function(e){e.textContent=new Date().getFullYear()})</script>
 </body>
 </html>
