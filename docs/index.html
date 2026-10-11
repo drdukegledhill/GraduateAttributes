@@ -278,6 +278,7 @@
     .q-card[data-idx="4"] .rating-btn input:checked + .pip { background: #457b9d; }
     .q-card[data-idx="5"] .rating-btn input:checked + .pip { background: #6a4c93; }
     .q-card[data-idx="6"] .rating-btn input:checked + .pip { background: #1c7c54; }
+    .q-card[data-idx="7"] .rating-btn input:checked + .pip { background: #7f5539; }
 
     /* ── Progress + submit ───────────────────────────── */
 
@@ -562,6 +563,8 @@
     .attr-modal-body li { margin-bottom: 5px; }
     .attr-modal-body strong { color: var(--primary-ink); }
     .attr-modal-body em { color: var(--muted); }
+    .attr-modal-body .attr-modal-links { font-size: 0.8rem; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .attr-modal-body a { color: var(--primary-ink); font-weight: 600; }
 
     .info-btn {
       background: none;
@@ -638,14 +641,14 @@
 
         <div class="submit-section">
           <div class="progress-row">
-            <span class="progress-text" id="progressText">0 of 7 answered</span>
+            <span class="progress-text" id="progressText">0 of 8 answered</span>
           </div>
           <div class="progress-track">
             <div class="progress-fill" id="progressFill"></div>
           </div>
           <div class="submit-row">
             <button class="btn btn-primary" id="submitBtn" disabled onclick="handleSubmit()">Save Check-in</button>
-            <p class="validation-msg" id="validationMsg">Please answer all 7 questions first.</p>
+            <p class="validation-msg" id="validationMsg">Please answer all 8 questions first.</p>
           </div>
         </div>
       </div>
@@ -733,7 +736,8 @@
   <li>Developing new skills outside of formal study or structured tasks</li>
   <li>Following through on commitments without needing reminders</li>
 </ul>
-<p><em>Employers value this because self-motivated graduates can be trusted to work independently, take initiative, and grow in a role without constant supervision.</em></p>`
+<p><em>Employers value this because self-motivated graduates can be trusted to work independently, take initiative, and grow in a role without constant supervision.</em></p>
+<p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
       name: 'Commercially aware',   icon: '🌐', color: '#e05c2a', bg: '#fdeee8',
@@ -748,7 +752,8 @@
   <li>Appreciating what customers, employees, and shareholders each need from an organisation</li>
   <li>Connecting your day-to-day work to the wider goals of the organisation</li>
 </ul>
-<p><em>Employers value this because graduates who understand business context make better decisions, communicate more effectively across teams, and can contribute meaningfully beyond their immediate role.</em></p>`
+<p><em>Employers value this because graduates who understand business context make better decisions, communicate more effectively across teams, and can contribute meaningfully beyond their immediate role.</em></p>
+<p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
       name: 'Enterprising',         icon: '💡', color: '#d68910', bg: '#fef5ec',
@@ -763,7 +768,8 @@
   <li>Experimenting with new approaches and learning from the results</li>
   <li>Turning a creative idea into a practical, concrete action</li>
 </ul>
-<p><em>Employers value this because organisations need people who can innovate and adapt. An enterprising mindset drives growth, problem-solving, and continuous improvement at every level.</em></p>`
+<p><em>Employers value this because organisations need people who can innovate and adapt. An enterprising mindset drives growth, problem-solving, and continuous improvement at every level.</em></p>
+<p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
       name: 'Resilient',            icon: '🏋️', color: '#2a9d8f', bg: '#e8f6f5',
@@ -778,7 +784,8 @@
   <li>Persisting when a task is harder or takes longer than expected</li>
   <li>Keeping perspective and maintaining your wellbeing when things go wrong</li>
 </ul>
-<p><em>Employers value this because workplaces are demanding and unpredictable. Resilient graduates sustain their performance, support their teams, and navigate ambiguity without needing excessive reassurance.</em></p>`
+<p><em>Employers value this because workplaces are demanding and unpredictable. Resilient graduates sustain their performance, support their teams, and navigate ambiguity without needing excessive reassurance.</em></p>
+<p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
       name: 'Effective collaborator', icon: '🤝', color: '#457b9d', bg: '#eaf2f8',
@@ -793,7 +800,8 @@
   <li>Adapting how you communicate to suit different people and situations</li>
   <li>Celebrating team successes, not just your own individual contributions</li>
 </ul>
-<p><em>Employers value this because almost all professional work involves collaboration. Graduates who build rapport quickly, navigate team dynamics well, and make the people around them more effective are invaluable.</em></p>`
+<p><em>Employers value this because almost all professional work involves collaboration. Graduates who build rapport quickly, navigate team dynamics well, and make the people around them more effective are invaluable.</em></p>
+<p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
       name: 'Confident leader',     icon: '🚀', color: '#6a4c93', bg: '#f2edf9',
@@ -808,7 +816,8 @@
   <li>Holding yourself accountable when things do not go to plan</li>
   <li>Making decisions, committing to them, and following through</li>
 </ul>
-<p><em>Employers value this because organisations need people at every level who can create momentum and give teams direction, not just those at the top of an org chart.</em></p>`
+<p><em>Employers value this because organisations need people at every level who can create momentum and give teams direction, not just those at the top of an org chart.</em></p>
+<p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
       name: 'Globally & socially aware', icon: '🌍', color: '#1c7c54', bg: '#e8f5ef',
@@ -823,9 +832,29 @@
   <li>Thinking about sustainability and ethical impact alongside commercial outcomes</li>
   <li>Being genuinely inclusive and respectful of difference in all its forms</li>
 </ul>
-<p><em>Employers value this because today's organisations operate across borders and face growing scrutiny over their social and environmental impact. Globally and socially aware graduates make better decisions, build more inclusive teams, and contribute to more ethical, sustainable organisations.</em></p>`
+<p><em>Employers value this because today's organisations operate across borders and face growing scrutiny over their social and environmental impact. Globally and socially aware graduates make better decisions, build more inclusive teams, and contribute to more ethical, sustainable organisations.</em></p>
+<p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
+    },
+    {
+      name: 'Plans personal growth and development', icon: '🧭', color: '#7f5539', bg: '#f4ede8',
+      desc: 'You understand your life goals; you are able to explore graduate occupations and identify suitable opportunities; you are able to devise and implement a plan for achieving your goals.',
+      question: 'How well do you understand your goals and plan the steps needed to achieve them?',
+      detail: `<p>Planning personal growth and development means understanding what you want from life and work, exploring the graduate occupations that could get you there, and creating a practical plan to reach your goals. It involves reflecting on your experiences, learning about yourself, and using those insights to guide your next steps.</p>
+<p><strong>What this looks like in practice:</strong></p>
+<ul>
+  <li>Understanding how your degree skills and knowledge link to graduate jobs</li>
+  <li>Identifying areas for academic improvement and planning practical steps</li>
+  <li>Discovering new things about yourself and strengthening your skills</li>
+  <li>Reflecting on your life goals and personal values</li>
+  <li>Learning from study, extra-curricular and work experience to inform your career plan</li>
+  <li>Identifying how to develop your abilities to become more employable</li>
+</ul>
+<p><em>Employers value this because graduates who know their strengths and direction, and who actively plan their development, are more purposeful, adaptable and likely to grow within a role.</em></p>
+<p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     }
   ];
+
+  const NUM_ATTRS = ATTRIBUTES.length;
 
   const LEVELS = [
     { v: 1, lbl: 'Just\nStarting' },
@@ -855,13 +884,14 @@
     'Resilient',
     ['Effective', 'collaborator'],
     ['Confident', 'leader'],
-    ['Globally &', 'socially aware']
+    ['Globally &', 'socially aware'],
+    ['Plans personal', 'growth &', 'development']
   ];
 
   /* ── State ─────────────────────────────────────────────── */
 
-  let historical     = [];            // array of number[7], loaded from URL
-  let current        = new Array(7).fill(null);
+  let historical     = [];            // array of number[8], loaded from URL
+  let current        = new Array(NUM_ATTRS).fill(null);
   let chart          = null;
   let progressChart  = null;
 
@@ -889,8 +919,11 @@
     const out = [];
     for (let i = 1; i <= 5; i++) {
       const v = p.get('v' + i);
-      if (v && /^[1-5]{7}$/.test(v)) {
-        out.push(v.split('').map(Number));
+      // Earlier 7-attribute links are padded with 0 (not yet rated) for the new attribute
+      if (v && /^[1-5]{7,8}$/.test(v)) {
+        const a = v.split('').map(Number);
+        while (a.length < NUM_ATTRS) a.push(0);
+        out.push(a);
       } else break;
     }
     return out;
@@ -898,7 +931,7 @@
 
   function buildUrl(attempts) {
     const p = new URLSearchParams();
-    attempts.forEach((a, i) => p.set('v' + (i + 1), a.join('')));
+    attempts.forEach((a, i) => p.set('v' + (i + 1), a.join('').replace(/0+$/, '')));
     const base = location.href.split('?')[0];
     return base + '?' + p.toString();
   }
@@ -1079,9 +1112,9 @@
 
   function updateProgress() {
     const done = current.filter(v => v !== null).length;
-    document.getElementById('progressFill').style.width = (done / 7 * 100) + '%';
-    document.getElementById('progressText').textContent = `${done} of 7 answered`;
-    document.getElementById('submitBtn').disabled = done < 7;
+    document.getElementById('progressFill').style.width = (done / NUM_ATTRS * 100) + '%';
+    document.getElementById('progressText').textContent = `${done} of ${NUM_ATTRS} answered`;
+    document.getElementById('submitBtn').disabled = done < NUM_ATTRS;
   }
 
   function updateBanner(n) {
@@ -1106,7 +1139,7 @@
     history.replaceState(null, '', url);
 
     // Rebuild chart: new attempt is now solid, in-progress resets
-    current = new Array(7).fill(null);
+    current = new Array(NUM_ATTRS).fill(null);
     initChart();
     refreshChartSummary();
 
@@ -1152,7 +1185,7 @@
   /* ── Start next assessment ─────────────────────────────── */
 
   function startNext() {
-    current = new Array(7).fill(null);
+    current = new Array(NUM_ATTRS).fill(null);
 
     document.getElementById('postSubmission').classList.add('hidden');
     document.getElementById('assessmentView').classList.remove('hidden');
@@ -1214,7 +1247,7 @@
     const labels   = historical.map((_, i) => `Check-in ${i + 1}`);
     const datasets = ATTRIBUTES.map((attr, i) => ({
       label:              attr.name,
-      data:               historical.map(attempt => attempt[i]),
+      data:               historical.map(attempt => attempt[i] || null),
       borderColor:        attr.color,
       backgroundColor:    'transparent',
       borderWidth:        2,
@@ -1278,6 +1311,7 @@
 
       const pips = historical.map((attempt, hi) => {
         const v = attempt[ai];
+        if (!v) return `<div class="bar-pip empty" title="Check-in ${hi+1}: not rated">–</div>`;
         return `<div class="bar-pip score-${v}" title="Check-in ${hi+1}: ${v}/5">${v}</div>`;
       }).join('');
 
@@ -1295,7 +1329,7 @@
     if (!confirm('This will clear all your check-in data and cannot be undone. Continue?')) return;
     history.replaceState(null, '', location.href.split('?')[0]);
     historical = [];
-    current    = new Array(7).fill(null);
+    current    = new Array(NUM_ATTRS).fill(null);
     document.getElementById('postSubmission').classList.add('hidden');
     document.getElementById('allDone').classList.add('hidden');
     document.getElementById('compareSection').classList.add('hidden');

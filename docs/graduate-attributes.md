@@ -9,3 +9,4 @@ Huddersfield's Graduate Attributes are the key skills you will develop on the GP
 - **Effective collaborator** — you work well with others and have effective interpersonal skills
 - **Confident leader** — you are able to enthuse a group and motivate them to work towards an identified goal
 - **Globally and socially aware** — you welcome new ways of thinking and can anticipate the impact of external situations
+- **Plans personal growth and development** — you understand your life goals; you are able to explore graduate occupations and identify suitable opportunities; you are able to devise and implement a plan for achieving your goals

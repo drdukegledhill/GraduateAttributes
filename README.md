@@ -2,11 +2,11 @@
 
 **Live tool: https://drdukegledhill.github.io/GraduateAttributes/**
 
-A lightweight, single-page web tool for students to check in on their development across the University of Huddersfield's seven Graduate Attributes. No accounts, no server, no data storage. Progress is encoded directly in a bookmarkable URL.
+A lightweight, single-page web tool for students to check in on their development across the University of Huddersfield's eight Graduate Attributes. No accounts, no server, no data storage. Progress is encoded directly in a bookmarkable URL.
 
 ## Graduate Attributes
 
-The seven Graduate Attributes describe the qualities that employers consistently look for in graduates. The tool helps you track your self-assessed development across each one throughout the year.
+The eight Graduate Attributes describe the qualities that employers consistently look for in graduates. The tool helps you track your self-assessed development across each one throughout the year.
 
 ### 🎯 Self-motivated
 
@@ -109,12 +109,14 @@ Each attribute card on the check-in page has an **ⓘ button** that opens a popu
 
 ### URL format
 
-Each check-in is stored as a 7-digit string (one digit per attribute, 1–5):
+Each check-in is stored as an 8-digit string (one digit per attribute, 1–5):
 
 ```
-index.html?v1=3452341
-index.html?v1=3452341&v2=4563452
+index.html?v1=34523415
+index.html?v1=34523415&v2=45634526
 ```
+
+Older 7-digit links (from before the eighth attribute was added) still load; the new attribute simply shows as not yet rated.
 
 No data ever leaves the student's browser.
 
