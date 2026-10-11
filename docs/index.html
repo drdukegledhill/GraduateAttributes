@@ -3,73 +3,151 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Graduate Attributes Check-in</title>
+  <title>Graduate Attributes Check-in | University of Huddersfield</title>
+  <meta name="theme-color" content="#1A1464">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* University of Huddersfield brand palette (2025 identity) */
     :root {
-      --primary: #1c3d6e;
-      --primary-ink: #1c3d6e;
-      --accent:  #e05c2a;
-      --teal:    #2a9d8f;
-      --bg:      #f0f4f8;
-      --card:    #ffffff;
-      --text:    #1a1a2e;
-      --muted:   #5a6a7e;
-      --border:  #d0d9e4;
-      --score-1: #b91c1c;
-      --score-2: #c2410c;
-      --score-3: #a16207;
-      --score-4: #3f6212;
-      --score-5: #166534;
-      --radius:  12px;
-      --shadow:  0 2px 14px rgba(0,0,0,0.08);
+      --uoh-navy:       #1A1464;
+      --uoh-blue:       #2A33FF;
+      --uoh-mint:       #02DD96;
+      --uoh-orchid:     #C36AB8;
+      --uoh-raspberry:  #C03369;
+      --uoh-gold:       #B59222;
+      --uoh-sky:        #8EBCE6;
+      --uoh-lemon:      #FDE580;
+      --uoh-forest:     #003E2B;
+      --uoh-paper:      #FDFBF7;
+
+      --primary:     var(--uoh-navy);
+      --primary-ink: var(--uoh-navy);
+      --primary-hover: var(--uoh-blue);
+      --accent:      var(--uoh-mint);
+      --accent-ink:  var(--uoh-navy);
+      --alert:       var(--uoh-raspberry);
+      --bg:          var(--uoh-paper);
+      --card:        #ffffff;
+      --text:        var(--uoh-navy);
+      --muted:       #5B5887;
+      --border:      #E3E1EC;
+      --score-1: #DCE9F7; --score-1-ink: #1A1464;
+      --score-2: #8EBCE6; --score-2-ink: #1A1464;
+      --score-3: #5C79F0; --score-3-ink: #ffffff;
+      --score-4: #2A33FF; --score-4-ink: #ffffff;
+      --score-5: #1A1464; --score-5-ink: #ffffff;
+      --radius:  6px;
+      --shadow:  0 1px 2px rgba(26,20,100,0.06), 0 4px 18px rgba(26,20,100,0.06);
     }
 
     [data-theme="dark"] {
-      --bg:     #111827;
-      --card:   #1f2937;
-      --text:   #f0f4f8;
-      --muted:  #9ca3af;
-      --border: #374151;
-      --shadow: 0 2px 14px rgba(0,0,0,0.35);
-      --primary-ink: #93c5fd;
+      --primary:     #2A2380;
+      --primary-ink: var(--uoh-sky);
+      --primary-hover: var(--uoh-blue);
+      --bg:      #0E0A3C;
+      --card:    #1A1464;
+      --text:    #FDFBF7;
+      --muted:   #B4B1DA;
+      --border:  #36308A;
+      --shadow:  0 2px 18px rgba(0,0,0,0.35);
+      --score-1: #36308A; --score-1-ink: #FDFBF7;
+      --score-2: #4F63C9; --score-2-ink: #ffffff;
+      --score-3: #8EBCE6; --score-3-ink: #1A1464;
+      --score-4: #5FE6B6; --score-4-ink: #1A1464;
+      --score-5: #02DD96; --score-5-ink: #1A1464;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding-bottom: 60px;
+      display: flex;
+      flex-direction: column;
     }
+
+    main { flex: 1; padding-bottom: 48px; }
+
+    a { color: inherit; }
+
+    :focus-visible { outline: 3px solid var(--uoh-blue); outline-offset: 2px; }
+    [data-theme="dark"] :focus-visible { outline-color: var(--uoh-mint); }
 
     /* ── Header ──────────────────────────────────────── */
 
     header {
-      background: var(--primary);
-      color: white;
-      padding: 24px 60px 20px;
-      text-align: center;
+      background: var(--uoh-navy);
+      color: #fff;
       position: relative;
+      overflow: hidden;
     }
 
-    header h1 { font-size: clamp(1.3rem, 4vw, 1.9rem); font-weight: 700; }
-    header p  { font-size: 0.88rem; opacity: 0.8; margin-top: 6px; max-width: 520px; margin-inline: auto; line-height: 1.5; }
+    .header-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 22px 24px 30px;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .brand-logo { display: block; height: 52px; width: auto; }
+
+    header h1 {
+      font-size: clamp(1.7rem, 5vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    header p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.82);
+      margin-top: 10px;
+      max-width: 460px;
+      line-height: 1.5;
+    }
+
+    /* Brand "steps" graphic: rising stairs echo development over the year */
+    .header-shape {
+      position: absolute;
+      right: 0; bottom: 0;
+      height: 100%;
+      width: min(46%, 520px);
+      pointer-events: none;
+    }
+    .header-shape svg { position: absolute; right: 0; bottom: 0; height: 78%; width: auto; }
 
     .theme-toggle {
-      position: absolute;
-      top: 50%; right: 16px;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.15);
-      border: none; border-radius: 8px;
-      padding: 6px 10px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 6px;
+      padding: 7px 10px;
       cursor: pointer;
-      font-size: 1.1rem; line-height: 1;
+      font-size: 1.05rem; line-height: 1;
       transition: background 0.18s;
+      flex-shrink: 0;
     }
-    .theme-toggle:hover { background: rgba(255,255,255,0.28); }
+    .theme-toggle:hover { background: rgba(255,255,255,0.24); }
+
+    @media (max-width: 640px) {
+      .brand-logo { height: 40px; }
+      .header-inner { padding: 16px 16px 24px; }
+      .header-top { margin-bottom: 18px; }
+      .header-shape { width: 42%; opacity: 0.9; }
+      .header-shape svg { height: 55%; }
+      header p { max-width: 62%; font-size: 0.86rem; }
+    }
 
     /* ── Two-column layout ───────────────────────────── */
 
@@ -87,7 +165,7 @@
         flex-direction: row;
         align-items: flex-start;
         gap: 24px;
-        padding: 24px 24px 0;
+        padding: 28px 24px 0;
       }
       .chart-panel {
         flex: 0 0 400px;
@@ -104,19 +182,20 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 18px 18px 16px;
+      border-top: 4px solid var(--uoh-mint);
     }
 
     /* ── Chart card ──────────────────────────────────── */
 
     .chart-card h2 {
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--primary-ink);
       margin-bottom: 2px;
     }
 
     .chart-summary {
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       color: var(--muted);
       margin-bottom: 10px;
       line-height: 1.4;
@@ -166,28 +245,43 @@
     /* ── Assessment banner ───────────────────────────── */
 
     .assessment-banner {
-      background: var(--primary);
+      background: var(--uoh-navy);
       color: white;
       border-radius: var(--radius);
-      padding: 14px 16px;
+      padding: 16px 18px;
       margin-bottom: 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .assessment-banner { background: var(--primary); }
+
+    /* small brand angle in the corner of the banner */
+    .assessment-banner::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0;
+      width: 64px; height: 100%;
+      background: var(--uoh-blue);
+      clip-path: polygon(100% 0, 100% 100%, 0 0);
+      opacity: 0.9;
     }
 
-    .assessment-banner h3 { font-size: 0.95rem; font-weight: 700; }
-    .assessment-banner p  { font-size: 0.78rem; opacity: 0.8; margin-top: 2px; }
+    .assessment-banner > * { position: relative; z-index: 1; }
+    .assessment-banner h3 { font-size: 1rem; font-weight: 700; }
+    .assessment-banner p  { font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-top: 3px; }
 
-    .dots-row { display: flex; gap: 7px; flex-shrink: 0; }
+    .dots-row { display: flex; gap: 7px; flex-shrink: 0; margin-right: 34px; }
     .dot {
-      width: 10px; height: 10px;
+      width: 11px; height: 11px;
       border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.35);
+      border: 2px solid rgba(255,255,255,0.4);
       transition: background 0.3s, border-color 0.3s;
     }
-    .dot.done    { background: var(--teal); border-color: var(--teal); }
+    .dot.done    { background: var(--uoh-mint); border-color: var(--uoh-mint); }
     .dot.current { background: white;       border-color: white; }
     .dot.future  { background: transparent; }
 
@@ -197,13 +291,14 @@
       background: var(--card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 16px;
+      padding: 16px 16px 16px 18px;
       margin-bottom: 10px;
       border: 1.5px solid transparent;
+      border-left: 5px solid var(--attr, var(--border));
       transition: border-color 0.25s;
     }
 
-    .q-card.answered { border-color: var(--teal); }
+    .q-card.answered { border-color: var(--uoh-mint); border-left-color: var(--attr, var(--uoh-mint)); }
 
     .q-card-header {
       display: flex;
@@ -213,16 +308,17 @@
     }
 
     .q-icon {
-      width: 34px; height: 34px;
-      border-radius: 8px;
+      width: 36px; height: 36px;
+      border-radius: 6px;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.05rem;
       flex-shrink: 0;
+      background: color-mix(in srgb, var(--attr) 20%, transparent);
     }
 
-    .q-title    { font-size: 0.92rem; font-weight: 700; }
-    .q-desc     { font-size: 0.76rem; color: var(--muted); margin-top: 2px; line-height: 1.4; }
-    .q-question { font-size: 0.84rem; margin-bottom: 11px; line-height: 1.5; color: var(--text); }
+    .q-title    { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .q-desc     { font-size: 0.77rem; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+    .q-question { font-size: 0.86rem; margin-bottom: 11px; line-height: 1.5; color: var(--text); }
 
     /* ── Rating buttons ──────────────────────────────── */
 
@@ -238,15 +334,15 @@
       cursor: pointer;
     }
 
-    .rating-btn input[type="radio"] { display: none; }
+    .rating-btn input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
 
     .rating-btn .pip {
       width: 100%; aspect-ratio: 1; max-width: 48px;
-      border-radius: 9px;
+      border-radius: 6px;
       border: 2px solid var(--border);
       background: var(--bg);
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.95rem; font-weight: 700;
+      font-size: 0.98rem; font-weight: 700;
       color: var(--muted);
       transition: all 0.14s;
       user-select: none;
@@ -254,28 +350,21 @@
     }
 
     .rating-btn .pip-lbl {
-      font-size: 0.58rem;
+      font-size: 0.6rem;
       color: var(--muted);
       text-align: center;
       line-height: 1.2;
     }
 
     .rating-btn:hover .pip { border-color: var(--primary-ink); color: var(--primary-ink); }
+    .rating-btn input:focus-visible + .pip { outline: 3px solid var(--uoh-blue); outline-offset: 2px; }
 
     .rating-btn input:checked + .pip {
       border-color: transparent;
-      color: white;
+      background: var(--attr);
+      color: var(--attr-ink);
       transform: scale(1.1);
     }
-
-    .q-card[data-idx="0"] .rating-btn input:checked + .pip { background: #e84393; }
-    .q-card[data-idx="1"] .rating-btn input:checked + .pip { background: #e05c2a; }
-    .q-card[data-idx="2"] .rating-btn input:checked + .pip { background: #d68910; }
-    .q-card[data-idx="3"] .rating-btn input:checked + .pip { background: #2a9d8f; }
-    .q-card[data-idx="4"] .rating-btn input:checked + .pip { background: #457b9d; }
-    .q-card[data-idx="5"] .rating-btn input:checked + .pip { background: #6a4c93; }
-    .q-card[data-idx="6"] .rating-btn input:checked + .pip { background: #1c7c54; }
-    .q-card[data-idx="7"] .rating-btn input:checked + .pip { background: #7f5539; }
 
     /* ── Progress + submit ───────────────────────────── */
 
@@ -288,18 +377,18 @@
       margin-bottom: 6px;
     }
 
-    .progress-text { font-size: 0.78rem; color: var(--muted); }
+    .progress-text { font-size: 0.8rem; color: var(--muted); }
 
     .progress-track {
       background: var(--border);
       border-radius: 100px;
-      height: 5px;
+      height: 6px;
       overflow: hidden;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .progress-fill {
-      background: var(--accent);
+      background: var(--uoh-mint);
       height: 100%;
       border-radius: 100px;
       transition: width 0.35s ease;
@@ -309,28 +398,24 @@
     .submit-row { text-align: center; }
 
     .btn {
-      border: none; border-radius: 100px;
-      padding: 12px 28px;
-      font-size: 0.9rem; font-weight: 600;
+      font-family: inherit;
+      border: none; border-radius: 6px;
+      padding: 13px 28px;
+      font-size: 0.92rem; font-weight: 700;
       cursor: pointer;
       transition: all 0.18s;
     }
 
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-primary:hover { background: #24508f; }
+    .btn-primary { background: var(--uoh-navy); color: white; }
+    [data-theme="dark"] .btn-primary { background: var(--uoh-mint); color: var(--uoh-navy); }
+    .btn-primary:hover { background: var(--uoh-blue); color: white; }
     .btn-primary:active { transform: scale(0.97); }
-    .btn-primary:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
-
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--primary);
-      color: var(--primary);
-    }
-    .btn-outline:hover { background: var(--primary); color: white; }
+    .btn-primary:disabled,
+    [data-theme="dark"] .btn-primary:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
 
     .validation-msg {
-      font-size: 0.78rem;
-      color: var(--accent);
+      font-size: 0.8rem;
+      color: var(--alert);
       margin-top: 8px;
       display: none;
     }
@@ -343,19 +428,20 @@
       box-shadow: var(--shadow);
       padding: 24px 20px;
       text-align: center;
+      border-top: 4px solid var(--uoh-mint);
     }
 
     .success-icon { font-size: 2.6rem; margin-bottom: 10px; }
-    .success-card h2 { font-size: 1.15rem; color: var(--primary-ink); margin-bottom: 6px; }
+    .success-card h2 { font-size: 1.25rem; color: var(--primary-ink); margin-bottom: 6px; }
     .success-card .sub {
-      font-size: 0.84rem; color: var(--muted);
+      font-size: 0.86rem; color: var(--muted);
       line-height: 1.5; margin-bottom: 18px;
     }
 
     .url-box {
       background: var(--bg);
       border: 1.5px solid var(--border);
-      border-radius: 10px;
+      border-radius: 6px;
       padding: 11px 12px;
       display: flex;
       align-items: center;
@@ -365,7 +451,7 @@
     }
 
     .url-text {
-      font-family: 'Menlo', 'Courier New', monospace;
+      font-family: 'Menlo', 'Consolas', monospace;
       font-size: 0.68rem;
       color: var(--text);
       flex: 1;
@@ -374,27 +460,38 @@
     }
 
     .copy-btn {
-      background: var(--primary);
+      font-family: inherit;
+      background: var(--uoh-navy);
       color: white;
       border: none;
-      border-radius: 6px;
-      padding: 6px 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      border-radius: 4px;
+      padding: 7px 13px;
+      font-size: 0.76rem;
+      font-weight: 700;
       cursor: pointer;
       flex-shrink: 0;
       transition: background 0.18s;
     }
-    .copy-btn:hover    { background: #24508f; }
-    .copy-btn.copied   { background: var(--teal); }
+    [data-theme="dark"] .copy-btn { background: var(--uoh-blue); }
+    .copy-btn:hover    { background: var(--uoh-blue); }
+    .copy-btn.copied,
+    [data-theme="dark"] .copy-btn.copied { background: var(--uoh-mint); color: var(--uoh-navy); }
 
     .next-btn-wrap { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    .section-label {
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--primary-ink);
+      text-align: left;
+      margin-bottom: 10px;
+    }
+    .section-rule { border: none; border-top: 1px solid var(--border); margin: 20px 0 16px; }
 
     /* comparison score grid */
     .compare-grid {
       display: grid;
       gap: 8px;
-      margin-top: 16px;
+      margin-top: 4px;
       text-align: left;
     }
 
@@ -402,34 +499,30 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
     }
 
     .compare-attr {
-      flex: 0 0 180px;
-      font-weight: 600;
-      white-space: normal;
-      overflow: visible;
-      text-overflow: clip;
+      flex: 0 0 190px;
+      font-weight: 700;
       line-height: 1.25;
     }
 
     .compare-bars { display: flex; gap: 4px; flex: 1; }
 
     .bar-pip {
-      width: 22px; height: 22px;
-      border-radius: 5px;
+      width: 24px; height: 24px;
+      border-radius: 4px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem; font-weight: 700;
-      color: white;
+      font-size: 0.72rem; font-weight: 700;
       flex-shrink: 0;
     }
 
-    .bar-pip.score-1 { background: var(--score-1); }
-    .bar-pip.score-2 { background: var(--score-2); }
-    .bar-pip.score-3 { background: var(--score-3); }
-    .bar-pip.score-4 { background: var(--score-4); }
-    .bar-pip.score-5 { background: var(--score-5); }
+    .bar-pip.score-1 { background: var(--score-1); color: var(--score-1-ink); }
+    .bar-pip.score-2 { background: var(--score-2); color: var(--score-2-ink); }
+    .bar-pip.score-3 { background: var(--score-3); color: var(--score-3-ink); }
+    .bar-pip.score-4 { background: var(--score-4); color: var(--score-4-ink); }
+    .bar-pip.score-5 { background: var(--score-5); color: var(--score-5-ink); }
 
     .bar-pip.empty { background: var(--border); color: var(--muted); }
 
@@ -440,27 +533,29 @@
       box-shadow: var(--shadow);
       padding: 32px 24px;
       text-align: center;
+      border-top: 4px solid var(--uoh-mint);
     }
     .done-card .icon   { font-size: 3rem; margin-bottom: 12px; }
-    .done-card h2      { color: var(--primary-ink); font-size: 1.2rem; margin-bottom: 8px; }
-    .done-card p       { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+    .done-card h2      { color: var(--primary-ink); font-size: 1.25rem; margin-bottom: 8px; }
+    .done-card p       { color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
 
     /* ── Mode switcher ───────────────────────────────── */
 
     .mode-switch {
       display: flex;
       background: var(--border);
-      border-radius: 100px;
+      border-radius: 6px;
       padding: 3px;
       gap: 2px;
       margin-bottom: 14px;
     }
 
     .mode-btn {
+      font-family: inherit;
       flex: 1;
-      border: none; border-radius: 100px;
-      padding: 9px 0;
-      font-size: 0.85rem; font-weight: 600;
+      border: none; border-radius: 4px;
+      padding: 10px 0;
+      font-size: 0.88rem; font-weight: 700;
       cursor: pointer;
       background: transparent;
       color: var(--muted);
@@ -468,39 +563,70 @@
     }
 
     .mode-btn.active {
-      background: var(--card);
-      color: var(--primary-ink);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+      background: var(--uoh-navy);
+      color: #fff;
+      box-shadow: 0 1px 4px rgba(26,20,100,0.2);
     }
+    [data-theme="dark"] .mode-btn.active { background: var(--uoh-mint); color: var(--uoh-navy); }
 
     /* ── Footer ──────────────────────────────────────── */
 
     footer {
-      text-align: center;
-      padding: 28px 16px 20px;
-      font-size: 0.74rem;
-      color: var(--muted);
+      background: var(--uoh-navy);
+      color: rgba(255,255,255,0.85);
+      position: relative;
+      overflow: hidden;
+      font-size: 0.78rem;
     }
 
+    /* sky-blue brand wave, as on the corporate slide footer */
+    .footer-wave {
+      position: absolute;
+      right: 0; top: 0;
+      height: 100%;
+      width: 360px;
+      pointer-events: none;
+    }
+
+    .footer-inner {
+      position: relative;
+      z-index: 1;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-copy {
+      margin-left: auto;
+      color: var(--uoh-navy);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .footer-copy:hover { text-decoration: underline; text-underline-offset: 2px; }
+
     .reset-btn {
+      font-family: inherit;
       background: none;
       border: none;
       cursor: pointer;
-      font-size: 0.74rem;
-      color: var(--muted);
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.85);
       padding: 0;
       text-decoration: underline;
       text-underline-offset: 2px;
     }
 
-    .reset-btn:hover { color: var(--accent); }
+    .reset-btn:hover { color: var(--uoh-mint); }
 
     /* ── Attribute info modal ────────────────────────── */
 
     .attr-modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.45);
+      background: rgba(14,10,60,0.55);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -511,13 +637,14 @@
     .attr-modal {
       background: var(--card);
       border-radius: var(--radius);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 40px rgba(14,10,60,0.3);
       padding: 24px;
       max-width: 480px;
       width: 100%;
       max-height: 82vh;
       overflow-y: auto;
       position: relative;
+      border-top: 5px solid var(--attr, var(--uoh-mint));
     }
 
     .attr-modal-header {
@@ -530,20 +657,22 @@
 
     .attr-modal-icon {
       width: 44px; height: 44px;
-      border-radius: 10px;
+      border-radius: 6px;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.3rem;
       flex-shrink: 0;
+      background: color-mix(in srgb, var(--attr) 20%, transparent);
     }
 
-    .attr-modal-title { font-size: 1.05rem; font-weight: 700; color: var(--primary-ink); }
+    .attr-modal-title { font-size: 1.1rem; font-weight: 700; color: var(--primary-ink); }
 
     .attr-modal-close {
+      font-family: inherit;
       position: absolute;
       top: 14px; right: 14px;
       background: var(--border);
       border: none;
-      border-radius: 6px;
+      border-radius: 4px;
       width: 28px; height: 28px;
       font-size: 0.85rem;
       cursor: pointer;
@@ -552,18 +681,21 @@
       transition: background 0.15s, color 0.15s;
       line-height: 1;
     }
-    .attr-modal-close:hover { background: var(--accent); color: white; }
+    .attr-modal-close:hover { background: var(--uoh-navy); color: white; }
+    [data-theme="dark"] .attr-modal-close:hover { background: var(--uoh-mint); color: var(--uoh-navy); }
 
-    .attr-modal-body { font-size: 0.84rem; line-height: 1.65; color: var(--text); }
+    .attr-modal-body { font-size: 0.86rem; line-height: 1.65; color: var(--text); }
     .attr-modal-body p { margin-bottom: 10px; }
     .attr-modal-body ul { padding-left: 18px; margin-bottom: 10px; }
     .attr-modal-body li { margin-bottom: 5px; }
     .attr-modal-body strong { color: var(--primary-ink); }
     .attr-modal-body em { color: var(--muted); }
-    .attr-modal-body .attr-modal-links { font-size: 0.8rem; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border); }
-    .attr-modal-body a { color: var(--primary-ink); font-weight: 600; }
+    .attr-modal-body .attr-modal-links { font-size: 0.82rem; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .attr-modal-body a { color: var(--uoh-blue); font-weight: 700; }
+    [data-theme="dark"] .attr-modal-body a { color: var(--uoh-mint); }
 
     .info-btn {
+      font-family: inherit;
       background: none;
       border: 1.5px solid var(--border);
       cursor: pointer;
@@ -575,7 +707,7 @@
       transition: color 0.15s, background 0.15s, border-color 0.15s;
       vertical-align: middle;
       margin-left: 5px;
-      font-weight: 600;
+      font-weight: 700;
     }
     .info-btn:hover { color: var(--primary-ink); border-color: var(--primary-ink); background: var(--bg); }
 
@@ -585,16 +717,26 @@
     @media (max-width: 380px) {
       .rating-btn .pip-lbl { display: none; }
       .rating-row { gap: 4px; }
-      .compare-attr { flex-basis: 100px; }
+      .compare-attr { flex-basis: 110px; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Graduate Attributes</h1>
-  <p>Complete up to 5 check-ins across the year and watch your profile develop.</p>
-  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☀️</button>
+  <div class="header-shape" aria-hidden="true">
+    <svg viewBox="0 0 400 220" preserveAspectRatio="xMaxYMax meet">
+      <path d="M0 220 V200 H40 V180 H80 V160 H120 V140 H160 V120 H200 V100 H240 V80 H280 V60 H320 V40 H360 V20 H400 V220 Z" fill="#02DD96"/>
+    </svg>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <img class="brand-logo" src="assets/uoh-logo-white.svg" alt="University of Huddersfield">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☀️</button>
+    </div>
+    <h1>Graduate Attributes</h1>
+    <p>Complete up to 5 check-ins across the year and watch your profile develop.</p>
+  </div>
 </header>
 
 <main>
@@ -670,15 +812,15 @@
 
           <!-- Comparison table (shown when >1 attempt) -->
           <div id="compareSection" class="hidden">
-            <hr style="border:none; border-top:1px solid var(--border); margin: 20px 0 16px;">
-            <p style="font-size:0.82rem; font-weight:700; color:var(--primary-ink); text-align:left; margin-bottom:8px;">Progress so far</p>
+            <hr class="section-rule">
+            <p class="section-label">Progress so far</p>
             <div class="compare-grid" id="compareGrid"></div>
           </div>
 
           <!-- Progress line chart (shown when >1 attempt) -->
           <div id="progressChartSection" class="hidden">
-            <hr style="border:none; border-top:1px solid var(--border); margin: 20px 0 16px;">
-            <p style="font-size:0.82rem; font-weight:700; color:var(--primary-ink); text-align:left; margin-bottom:12px;">Score trends</p>
+            <hr class="section-rule">
+            <p class="section-label">Score trends</p>
             <div style="position:relative; height:220px;">
               <canvas id="progressChart"></canvas>
             </div>
@@ -701,7 +843,13 @@
 </main>
 
 <footer>
-  <p><a class="reset-btn" href="https://drduke.uk" target="_blank" rel="noopener">&copy; <span class="js-year">2026</span> Dr Duke Gledhill</a> &nbsp;·&nbsp; <button class="reset-btn" onclick="resetAll()">Reset all data</button></p>
+  <svg class="footer-wave" viewBox="846 0 1074 176" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+    <path d="M2160 244.99 1086.58 244.99C1111.51 202.21 1079.9 183.79 1104.82 141.01 1129.75 98.23 1161.36 116.65 1186.29 73.87 1211.22 31.09 1179.6 12.68 1204.53-30.1L2160.01-30.1 2160.01 244.99Z" fill="#8EBCE6"/>
+  </svg>
+  <div class="footer-inner">
+    <button class="reset-btn" onclick="resetAll()">Reset all data</button>
+    <a class="footer-copy" href="https://drduke.uk" target="_blank" rel="noopener">&copy; <span class="js-year">2026</span> Dr Duke Gledhill</a>
+  </div>
 </footer>
 
 <!-- Attribute info modal -->
@@ -721,7 +869,7 @@
 
   const ATTRIBUTES = [
     {
-      name: 'Self-motivated',       icon: '🎯', color: '#e84393', bg: '#fde8f4',
+      name: 'Self-motivated',       icon: '🎯', color: '#2A33FF', ink: '#ffffff', line: '#2A33FF', lineDark: '#8C91FF',
       desc: 'You have the ability to do what needs to be done without being prompted by others.',
       question: 'How well do you drive your own work and development without needing others to push you?',
       detail: `<p>Self-motivation means taking ownership of your work and development without needing external prompting. It is about setting goals for yourself, following through without being chased, and actively seeking new challenges rather than waiting to be told what to do.</p>
@@ -737,7 +885,7 @@
 <p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
-      name: 'Commercially aware',   icon: '🌐', color: '#e05c2a', bg: '#fdeee8',
+      name: 'Commercially aware',   icon: '🌐', color: '#B59222', ink: '#1A1464', line: '#B59222', lineDark: '#D9BC5C',
       desc: 'You understand the wider environment in which an organisation operates.',
       question: 'How confident are you in understanding the pressures and opportunities facing organisations today?',
       detail: `<p>Commercial awareness means knowing what drives success in an organisation, including markets, competition, regulation, finance, and the needs of different stakeholders. It is the ability to see the bigger picture: why decisions are made, how different parts of a business connect, and what pressures organisations face from outside.</p>
@@ -753,7 +901,7 @@
 <p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
-      name: 'Enterprising',         icon: '💡', color: '#d68910', bg: '#fef5ec',
+      name: 'Enterprising',         icon: '💡', color: '#C36AB8', ink: '#1A1464', line: '#C36AB8', lineDark: '#DDA3D5',
       desc: 'You are able to adapt your thinking and behaviour to suit changing circumstances.',
       question: 'How well do you adapt your thinking and approach when situations change or new opportunities arise?',
       detail: `<p>Being enterprising is not just about starting businesses. It means bringing creative, proactive energy to whatever you do. It is about spotting opportunities, generating ideas, and adapting your approach when circumstances change or when a plan is not working. Enterprising people find ways forward where others see obstacles.</p>
@@ -769,7 +917,7 @@
 <p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
-      name: 'Resilient',            icon: '🏋️', color: '#2a9d8f', bg: '#e8f6f5',
+      name: 'Resilient',            icon: '🏋️', color: '#02DD96', ink: '#1A1464', line: '#00B37A', lineDark: '#02DD96',
       desc: 'You are driven, resolute and determined and able to deal positively with challenges.',
       question: 'How effectively do you deal with setbacks, pressure, and difficult challenges?',
       detail: `<p>Resilience is the ability to deal constructively with setbacks, pressure, and uncertainty, and to keep going. It does not mean never struggling; it means being able to recover, learn from difficulty, and sustain your effort over time. Resilient people do not need everything to go smoothly to perform well.</p>
@@ -785,7 +933,7 @@
 <p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
-      name: 'Effective collaborator', icon: '🤝', color: '#457b9d', bg: '#eaf2f8',
+      name: 'Effective collaborator', icon: '🤝', color: '#8EBCE6', ink: '#1A1464', line: '#5E97CF', lineDark: '#8EBCE6',
       desc: 'You work well with others and have effective interpersonal skills.',
       question: 'How well do you work within teams and build productive, positive relationships with others?',
       detail: `<p>Effective collaboration is more than just being easy to work with. It means actively contributing to group success, listening to understand rather than just waiting to speak, managing disagreements constructively, and adapting your communication style to suit different people and contexts.</p>
@@ -801,7 +949,7 @@
 <p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
-      name: 'Confident leader',     icon: '🚀', color: '#6a4c93', bg: '#f2edf9',
+      name: 'Confident leader',     icon: '🚀', color: '#C03369', ink: '#ffffff', line: '#C03369', lineDark: '#EC7FA6',
       desc: 'You are able to enthuse a group and motivate them to work towards an identified goal.',
       question: 'How confident are you in stepping up to lead, motivate, and guide others towards a shared goal?',
       detail: `<p>Leadership is not reserved for managers. A confident leader is someone who can identify what needs doing, bring others along, and make things happen, whether or not they hold a formal role. It means communicating a clear direction, holding yourself and others accountable, and owning the outcome of the decisions you make.</p>
@@ -817,7 +965,7 @@
 <p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
-      name: 'Globally & socially aware', icon: '🌍', color: '#1c7c54', bg: '#e8f5ef',
+      name: 'Globally & socially aware', icon: '🌍', color: '#003E2B', ink: '#ffffff', line: '#003E2B', lineDark: '#FDE580',
       desc: 'You welcome new ways of thinking and can anticipate the impact of external situations.',
       question: 'How open are you to diverse perspectives, and how aware are you of global and social issues?',
       detail: `<p>Global and social awareness means recognising that decisions have implications beyond the immediate, including for people, communities, and the environment. It involves being curious about perspectives that differ from your own, understanding how cultural differences shape communication and expectation, and thinking about ethical and sustainability impacts alongside performance.</p>
@@ -833,7 +981,7 @@
 <p class="attr-modal-links"><a href="https://videohud.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx?folderID=04b13f17-6c2b-4780-8633-b3e900e13546" target="_blank" rel="noopener">▶ Watch the HGA videos</a> · <a href="https://students.hud.ac.uk/media/assets/document/studentservices/UoH-GraduateAttributesFramework2022.pdf" target="_blank" rel="noopener">Graduate Attributes Framework (PDF)</a></p>`
     },
     {
-      name: 'Plans personal growth and development', icon: '🧭', color: '#7f5539', bg: '#f4ede8',
+      name: 'Plans personal growth and development', icon: '🧭', color: '#1A1464', ink: '#ffffff', line: '#1A1464', lineDark: '#FDFBF7',
       desc: 'You understand your life goals; you are able to explore graduate occupations and identify suitable opportunities; you are able to devise and implement a plan for achieving your goals.',
       question: 'How well do you understand your goals and plan the steps needed to achieve them?',
       detail: `<p>Planning personal growth and development means understanding what you want from life and work, exploring the graduate occupations that could get you there, and creating a practical plan to reach your goals. It involves reflecting on your experiences, learning about yourself, and using those insights to guide your next steps.</p>
@@ -861,17 +1009,19 @@
     { v: 5, lbl: 'Excelling'     }
   ];
 
-  /* Each historical attempt gets a distinct solid colour */
+  /* Each historical attempt gets a distinct colour from the brand palette */
   const ATTEMPT_STYLES = [
-    { border: '#8ecae6', bg: 'rgba(142,202,230,0.10)', label: 'Check-in 1' },
-    { border: '#219ebc', bg: 'rgba(33,158,188,0.10)',  label: 'Check-in 2' },
-    { border: '#2a9d8f', bg: 'rgba(42,157,143,0.10)',  label: 'Check-in 3' },
-    { border: '#6a4c93', bg: 'rgba(106,76,147,0.12)',  label: 'Check-in 4' },
-    { border: '#1c3d6e', bg: 'rgba(28,61,110,0.14)',   label: 'Check-in 5' }
+    { border: '#8EBCE6', borderDark: '#8EBCE6', bg: 'rgba(142,188,230,0.14)', label: 'Check-in 1' },
+    { border: '#B59222', borderDark: '#D9BC5C', bg: 'rgba(181,146,34,0.10)',  label: 'Check-in 2' },
+    { border: '#C36AB8', borderDark: '#DDA3D5', bg: 'rgba(195,106,184,0.10)', label: 'Check-in 3' },
+    { border: '#2A33FF', borderDark: '#8C91FF', bg: 'rgba(42,51,255,0.10)',   label: 'Check-in 4' },
+    { border: '#1A1464', borderDark: '#FDFBF7', bg: 'rgba(26,20,100,0.14)',   label: 'Check-in 5' }
   ];
 
-  /* Current in-progress: orange dashed */
-  const CUR = { border: '#e05c2a', bg: 'rgba(224,92,42,0.07)' };
+  /* Current in-progress: brand mint, dashed */
+  const CUR = { border: '#00B37A', borderDark: '#02DD96', bg: 'rgba(2,221,150,0.12)' };
+
+  function lineCol(o) { return isDark() ? (o.borderDark || o.lineDark) : (o.border || o.line); }
 
   /* Multi-line labels keep the chart readable on small screens */
   const CHART_LABELS = [
@@ -895,10 +1045,11 @@
   /* ── Theme helpers ─────────────────────────────────────── */
 
   function isDark()  { return document.documentElement.dataset.theme === 'dark'; }
-  function cMuted()  { return isDark() ? '#9ca3af' : '#5a6a7e'; }
-  function cText()   { return isDark() ? '#f0f4f8' : '#1a1a2e'; }
-  function cGrid()   { return isDark() ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'; }
-  function cAngle()  { return isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'; }
+  function cMuted()  { return isDark() ? '#B4B1DA' : '#5B5887'; }
+  function cText()   { return isDark() ? '#FDFBF7' : '#1A1464'; }
+  function cGrid()   { return isDark() ? 'rgba(255,255,255,0.10)' : 'rgba(26,20,100,0.08)'; }
+  function cPointRing() { return isDark() ? '#1A1464' : '#ffffff'; }
+  function cAngle()  { return isDark() ? 'rgba(255,255,255,0.12)' : 'rgba(26,20,100,0.10)'; }
 
   function toggleTheme() {
     const dark = isDark();
@@ -936,6 +1087,7 @@
   /* ── Chart ─────────────────────────────────────────────── */
 
   function makeDataset(attempt, style, dashed) {
+    style = { ...style, border: lineCol(style) };
     return {
       label: style.label,
       data: attempt,
@@ -944,7 +1096,7 @@
       borderWidth: 2.2,
       borderDash: dashed ? [8, 4] : [],
       pointBackgroundColor: attempt.map(v => v > 0 ? style.border : 'transparent'),
-      pointBorderColor:     attempt.map(v => v > 0 ? '#fff'       : 'transparent'),
+      pointBorderColor:     attempt.map(v => v > 0 ? cPointRing() : 'transparent'),
       pointBorderWidth: 2,
       pointRadius:          attempt.map(v => v > 0 ? 5 : 0),
       pointHoverRadius:     attempt.map(v => v > 0 ? 7 : 0),
@@ -999,7 +1151,7 @@
             },
             pointLabels: {
               color: cText(),
-              font: { size: window.innerWidth < 400 ? 8 : 10, weight: '600' }
+              font: { family: 'Arial, Helvetica, sans-serif', size: window.innerWidth < 400 ? 8 : 10, weight: '700' }
             },
             grid:        { color: cGrid() },
             angleLines:  { color: cAngle() }
@@ -1021,10 +1173,10 @@
     const hasAny = current.some(v => v !== null);
 
     ds.data = cdata;
-    ds.borderColor     = hasAny ? CUR.border : 'transparent';
+    ds.borderColor     = hasAny ? lineCol(CUR) : 'transparent';
     ds.backgroundColor = hasAny ? CUR.bg     : 'transparent';
-    ds.pointBackgroundColor = cdata.map(v => v > 0 ? CUR.border : 'transparent');
-    ds.pointBorderColor     = cdata.map(v => v > 0 ? '#fff'     : 'transparent');
+    ds.pointBackgroundColor = cdata.map(v => v > 0 ? lineCol(CUR) : 'transparent');
+    ds.pointBorderColor     = cdata.map(v => v > 0 ? cPointRing() : 'transparent');
     ds.pointRadius          = cdata.map(v => v > 0 ? 5 : 0);
 
     chart.update();
@@ -1076,6 +1228,8 @@
       const card = document.createElement('div');
       card.className = 'q-card';
       card.dataset.idx = idx;
+      card.style.setProperty('--attr', attr.color);
+      card.style.setProperty('--attr-ink', attr.ink);
 
       const btns = LEVELS.map(lv => `
         <label class="rating-btn">
@@ -1087,7 +1241,7 @@
 
       card.innerHTML = `
         <div class="q-card-header">
-          <div class="q-icon" style="background:${attr.bg}; color:${attr.color};">${attr.icon}</div>
+          <div class="q-icon">${attr.icon}</div>
           <div>
             <div class="q-title">${attr.name} <button class="info-btn" onclick="openAttrModal(${idx})" aria-label="More about ${attr.name}">ⓘ</button></div>
             <div class="q-desc">${attr.desc}</div>
@@ -1245,11 +1399,11 @@
     const datasets = ATTRIBUTES.map((attr, i) => ({
       label:              attr.name,
       data:               historical.map(attempt => attempt[i] || null),
-      borderColor:        attr.color,
+      borderColor:        lineCol(attr),
       backgroundColor:    'transparent',
       borderWidth:        2,
-      pointBackgroundColor: attr.color,
-      pointBorderColor:   '#fff',
+      pointBackgroundColor: lineCol(attr),
+      pointBorderColor:   cPointRing(),
       pointBorderWidth:   1.5,
       pointRadius:        5,
       pointHoverRadius:   7,
@@ -1258,7 +1412,7 @@
 
     document.getElementById('progressChartLegend').innerHTML = ATTRIBUTES.map(attr =>
       `<div class="legend-item">
-        <div class="legend-swatch" style="background:${attr.color}; height:3px;"></div>
+        <div class="legend-swatch" style="background:${lineCol(attr)}; height:3px;"></div>
         <span>${attr.name}</span>
       </div>`
     ).join('');
@@ -1346,8 +1500,7 @@
   function openAttrModal(idx) {
     const attr = ATTRIBUTES[idx];
     const icon = document.getElementById('modalIcon');
-    icon.style.background = attr.bg;
-    icon.style.color = attr.color;
+    document.querySelector('.attr-modal').style.setProperty('--attr', attr.color);
     icon.textContent = attr.icon;
     document.getElementById('modalTitle').textContent = attr.name;
     document.getElementById('modalBody').innerHTML = attr.detail;
@@ -1391,6 +1544,7 @@
     }
   }
 
+  Chart.defaults.font.family = 'Arial, "Helvetica Neue", Helvetica, sans-serif';
   init();
 </script>
 <script>document.querySelectorAll(".js-year").forEach(function(e){e.textContent=new Date().getFullYear()})</script>

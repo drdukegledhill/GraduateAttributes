@@ -131,7 +131,9 @@ The tool is designed to be served via **GitHub Pages** from the `/docs` folder.
 
 ## Development
 
-The tool is a single self-contained HTML file at `docs/index.html` with no build step or dependencies beyond a CDN-hosted copy of [Chart.js](https://www.chartjs.org/).
+The tool is a single HTML file at `docs/index.html` with no build step or dependencies beyond a CDN-hosted copy of [Chart.js](https://www.chartjs.org/). Brand assets (the University of Huddersfield logo and favicons) live in `docs/assets/`.
+
+The styling follows the University of Huddersfield brand: navy `#1A1464` as the primary colour, with mint `#02DD96`, bright blue `#2A33FF`, orchid `#C36AB8`, raspberry `#C03369`, gold `#B59222` and sky `#8EBCE6` as accents, an off-white `#FDFBF7` page background and Arial as the typeface. Brand colour tokens are defined as CSS custom properties at the top of the stylesheet.
 
 To run locally, open `docs/index.html` directly in a browser or serve with any static file server:
 
